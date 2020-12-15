@@ -1,13 +1,14 @@
 {
   "name": "amigo-fit",
   "version": "1.0.0",
-  "description": "",
+  "description": "App for Riders",
   "main": "app.js",
   "scripts": {
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["bike"],
+  "author": "Diógenes Dauster",
   "license": "ISC",
   "dependencies": {
     "ejs": "^3.1.5",
