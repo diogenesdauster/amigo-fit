@@ -17,7 +17,7 @@ To clone and run this application, you will need Git installed on your computer.
 
 #### 2. Run "npm install" in your local repository's folder
 
-To install dependencies, from within the both project directorys:
+To install dependencies
 
 `$ npm install` or `$ yarn install`
 
