@@ -3,6 +3,12 @@
   padding: 0px;
 }
 
+input {
+-webkit-appearance: none;
+-moz-appearance: none;
+appearance: none;
+}
+
 body {
   background-color: #1e4f6e;
   color: white;
@@ -31,6 +37,7 @@ label {
   cursor: pointer;
   left: 0;
   position: absolute;
+  color: white;
   text-decoration: none;
   margin-left: 2rem;
 }
@@ -38,6 +45,7 @@ label {
 .nav-profile {
   cursor: pointer;
   right: 0;
+  color: white;
   position: absolute;
   text-decoration: none;
   margin-right: 2rem;
@@ -119,14 +127,14 @@ label {
 .button {
   display: inline-block;
   margin-bottom: 50px;
+  width: 13rem;
   border-radius: 100px;
-  background: white;
   padding: 0.5rem 1rem;
-  text-decoration: none;
   border: none;
   font-size: 1.5rem;
   font-weight: 600;
   background-color: #f1363a;
+  text-decoration: none;
   color: white;
   cursor: pointer;
 }

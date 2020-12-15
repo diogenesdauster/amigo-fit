@@ -3,6 +3,13 @@
   padding: 0px;
 }
 
+input {
+-webkit-appearance: none;
+-moz-appearance: none;
+appearance: none;
+}
+
+
 body {
   background-color: #1e4f6e;
   font-family: 'Roboto', sans-serif;
@@ -17,7 +24,7 @@ header {
 }
 
 nav {
-  padding: 1.5rem;
+  padding: 2rem;
 }
 
 .logo {
@@ -29,17 +36,16 @@ nav {
 
 .form-signin {
   width: 100%;
-  max-width: 330px;
-  padding: 15px;
+  max-width: 530px;
+  padding: 1rem;
   margin: auto;
 }
 
 .form-input {
   display: block;
   width: 100%;
-  height: calc(1.5em + .75rem + 2px);
   padding: .375rem .75rem;
-  font-size: 1rem;
+  font-size: 2rem;
   font-weight: 400;
   line-height: 1.5;
   color: white;
@@ -55,12 +61,11 @@ nav {
 }
 
 .form-signin .form-input {
-  margin-bottom: 10px;
+  margin-bottom: 1.5rem;
   position: relative;
   box-sizing: border-box;
   height: auto;
-  padding: 10px;
-  font-size: 16px;
+  padding: 1.5rem;
 }
 
 .form-signin img {
@@ -74,7 +79,7 @@ nav {
 #opcoes span {
   position: absolute;
   left: 0px;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   font-weight: 900;
 }
 
@@ -84,19 +89,18 @@ nav {
   text-decoration: none;
   color: white;
   opacity: 0.7;
-  font-size: 1.2rem;
+  font-size: 1.6rem;
   font-weight: 400;
 }
 
 .button {
-  margin-top: 5rem;
-  width: 6rem;
+  margin-top: 6rem;
+  width: 13rem;
   border-radius: 100px;
-  background: white;
-  padding: 0.5rem;
+  padding: 0.5rem 1rem;
   border: none;
-  font-size: 1rem;
-  font-weight: 900;
+  font-size: 1.5rem;
+  font-weight: 600;
   background-color: #f1363a;
   color: white;
   cursor: pointer;
