@@ -5,23 +5,23 @@ app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
 app.get("/login", function(req,res, next){
-  res.sendFile(__dirname+"/public/login.html");
+  res.render("login");
 });
 
 app.get("/", function(req,res, next){
-  res.sendFile(__dirname+"/public/index.html");
+  res.render("index");
 });
 
 app.get("/cadastro", function(req,res, next){
-  res.sendFile(__dirname+"/public/cadastro.html");
+  res.render("cadastro");
 });
 
 app.get("/dadosbancarios", function(req,res, next){
-  res.sendFile(__dirname+"/public/dadosbancarios.html");
+  res.render("dadosbancarios");
 });
 
 app.get("/indicacoes", function(req,res, next){
-  res.sendFile(__dirname+"/public/indicacoes.html");
+  res.render("indicacoes");
 });
 
 
