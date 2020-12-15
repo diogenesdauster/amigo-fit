@@ -1,4 +1,4 @@
-#Amigo Fit
+# Amigo Fit
 A Small project with HTML + CSS + JS for riders
 
 ## Installation instructions
@@ -17,7 +17,7 @@ To clone and run this application, you will need Git installed on your computer.
 
 #### 2. Run "npm install" in your local repository's folder
 
-To install dependencies, from within the both project directorys:
+To install dependencies
 
 `$ npm install` or `$ yarn install`
 
@@ -29,13 +29,13 @@ To begin the server run :
 
 #### 4. Open your browser at http://localhost:3000/
 
-##ScreenShots
+## ScreenShots
 | Login        | Home           | Cadastro  |
 | ------------- |-------------| -----|
 |![login](screenshots/login.png)|![home](screenshots/home.png)|![cadastro](screenshots/cadastro.png)|
 
 
-##Todo
+## Todo
 - Html ✅
 - Css ✅ 
 - Express ✅
