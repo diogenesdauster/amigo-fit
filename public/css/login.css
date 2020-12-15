@@ -1,0 +1,103 @@
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
+body {
+  background-color: #1e4f6e;
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
+  color: white;
+  font-size: 2.5rem;
+  font-weight: 300;
+}
+
+header {
+  background-color: #000000;
+}
+
+nav {
+  padding: 1.5rem;
+}
+
+.logo {
+  display: block;
+  margin: auto;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+.form-signin {
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: auto;
+}
+
+.form-input {
+  display: block;
+  width: 100%;
+  height: calc(1.5em + .75rem + 2px);
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: white;
+  background-color: #537d97;
+  border: none;
+  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.form-input::placeholder {
+  color: white;
+  opacity: 0.5;
+  text-align: center;
+}
+
+.form-signin .form-input {
+  margin-bottom: 10px;
+  position: relative;
+  box-sizing: border-box;
+  height: auto;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.form-signin img {
+  margin-bottom: 2rem;
+}
+
+#opcoes {
+  position: relative;
+}
+
+#opcoes span {
+  position: absolute;
+  left: 0px;
+  font-size: 1.2rem;
+  font-weight: 900;
+}
+
+#opcoes a {
+  position: absolute;
+  right: 0px;
+  text-decoration: none;
+  color: white;
+  opacity: 0.7;
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+
+.button {
+  margin-top: 5rem;
+  width: 6rem;
+  border-radius: 100px;
+  background: white;
+  padding: 0.5rem;
+  border: none;
+  font-size: 1rem;
+  font-weight: 900;
+  background-color: #f1363a;
+  color: white;
+  cursor: pointer;
+}
