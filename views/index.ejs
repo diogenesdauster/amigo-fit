@@ -13,9 +13,9 @@
   <main>
     <header>
       <nav>
-        <a href="/login" class="nav-logout">Sair</a>
+        <a href="/logout" class="nav-logout">Sair</a>
         <span>Amigo Fit</span>
-        <a href="/cadastro" class="nav-profile">Perfil</a>
+        <a href="/dadosbancarios" class="nav-profile">Perfil</a>
       </nav>
     </header>
     <section>
@@ -31,7 +31,7 @@
               INDICADOS
             </div>
             <div class="card-body">
-              0
+              <%= dados.indicados %>
             </div>
           </div>
           <div class="card">
@@ -39,7 +39,7 @@
               ATIVOS
             </div>
             <div class="card-body">
-              0
+              <%= dados.ativos %>
             </div>
           </div>
           <div class="card">
@@ -47,7 +47,7 @@
               INATIVOS
             </div>
             <div class="card-body">
-              0
+              <%= dados.inativos %>
             </div>
           </div>
         </div>
@@ -57,7 +57,7 @@
             BONUS
           </div>
           <div class="bonus-content">
-            0
+            <%= dados.bonus %>
           </div>
         </div>
         <a href="/indicacoes" class="button">INDICAR</a>

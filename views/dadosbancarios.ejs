@@ -19,16 +19,16 @@
     </header>
     <section>
 
-      <form class="form-cadastro">
+      <form method="post" class="form-cadastro">
         <span class="form-header">Dados Bancarios</span>
         <label for="banco">BANCO</label>
-        <input name="banco" type="text" placeholder="digite o nome do seu banco" class="form-input" />
+        <input name="banco" type="text" placeholder="digite o nome do seu banco" value="<%= dados.banco%>" class="form-input" />
         <label for="agencia">AGÊNCIA</label>
-        <input name="agencia" type="text" placeholder="XXXXXX" class="form-input" />
+        <input name="agencia" type="text" placeholder="XXXXXX" value="<%= dados.agencia%>"  class="form-input" />
         <label for="conta">CONTA</label>
-        <input name="conta" type="text" placeholder="XXXXXXXX-X" class="form-input" />
-        <label for="tipo">TIPO</label>
-        <input name="tipo" type="text" placeholder="selecione o tipo da conta" class="form-input" />
+        <input name="conta" type="text" placeholder="XXXXXXXX-X" value="<%= dados.conta%>" class="form-input" />
+        <label for="tpconta">TIPO</label>
+        <input name="tpconta" type="text" placeholder="selecione o tipo da conta" value="<%= dados.tpconta%>" class="form-input" />
         <input type="submit" value="SALVAR" class="button" />
       </form>
     </section>

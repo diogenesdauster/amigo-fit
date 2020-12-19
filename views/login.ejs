@@ -18,13 +18,13 @@
     </header>
     <section>
       <img src='./assets/logo1.png' alt='logo1' class="logo" />
-      <form class="form-signin">
+      <form method="post" action="/login" class="form-signin">
         <img src='./assets/logo2.png' alt='logo2' />
-        <input name="email" type="text" placeholder="Email" class="form-input" />
-        <input name="senha" type="password" placeholder="Senha" class="form-input" />
+        <input name="username" type="text" placeholder="Email" class="form-input" />
+        <input name="password" type="password" placeholder="Senha" class="form-input" />
         <div id="opcoes">
-          <span>Cadastro</span>
-          <a href="#">Esqueci a Senha</a>
+          <a href="/cadastro" class="opcoes-cadastro">Cadastro</a>
+          <a href="#" class="opcoes-esqueci-senha">Esqueci a Senha</a>
         </div>
         <input type="submit" value="ENTRAR" class="button" />
       </form>
