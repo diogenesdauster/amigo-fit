@@ -135,6 +135,6 @@ app.post("/indicacoes", function(req,res, next){
 });
 
 
-app.listen(5000,function(){
-  console.log("The server was started on port 3000");
+app.listen(process.env.PORT || 5000,function(){
+  console.log("The server was started on port 5000");
 });
