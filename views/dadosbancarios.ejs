@@ -20,6 +20,7 @@
     <section>
 
       <form method="post" class="form-cadastro">
+        <input type="hidden" name="id" value="<%=dados.id%>">
         <span class="form-header">Dados Bancarios</span>
         <label for="banco">BANCO</label>
         <input name="banco" type="text" placeholder="digite o nome do seu banco" value="<%= dados.banco%>" class="form-input" />
@@ -28,7 +29,10 @@
         <label for="conta">CONTA</label>
         <input name="conta" type="text" placeholder="XXXXXXXX-X" value="<%= dados.conta%>" class="form-input" />
         <label for="tpconta">TIPO</label>
-        <input name="tpconta" type="text" placeholder="selecione o tipo da conta" value="<%= dados.tpconta%>" class="form-input" />
+        <select class="form-input" name="tpconta">
+          <option value="CONTA_CORRENTE" <%= dados.tpconta == 'CONTA_CORRENTE' ? 'selected' : ''%>>CONTA CORRENTE</option>
+          <option value="POUPANCA" <%= dados.tpconta == 'POUPANCA' ? 'selected' : ''%>>POUPANCA</option>
+        </select>
         <input type="submit" value="SALVAR" class="button" />
       </form>
     </section>

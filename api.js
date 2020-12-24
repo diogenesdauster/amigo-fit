@@ -1,4 +1,5 @@
 const https = require('https');
+const HOST = "amigofit-ws.herokuapp.com";
 
 
 const loginData = function(username, password, data) {
@@ -92,23 +93,23 @@ const estatisticas = function(cpf, data) {
 
 
 const createUser = function(data, callback) {
-
+  const jsonData = JSON.stringify(data);
   const options = {
+    host: HOST,
+    port: 443,
+    path: '/usuario/',
     method: 'POST',
     headers: {
-        'Content-Type': 'application/json',
-        'Content-Length': JSON.stringify(data).length
-      }
+      'Content-Type': 'application/json',
+      'Content-Length': jsonData.length
+    }
   };
 
-  const req = https.request("https://amigofit-ws.herokuapp.com/usuario/", options, (res) => {
-    console.log('statusCode:', res.statusCode);
-    console.log('headers:', res.headers);
+  const req = https.request(options, (res) => {
 
     res.on('data', (d) => {
-      console.log('statusCode:', d);
-      process.stdout.write(d);
-      callback(null, JSON.parse(d))
+      const userJson = JSON.parse(d);
+      callback(null, userJson)
     });
 
   });
@@ -119,7 +120,162 @@ const createUser = function(data, callback) {
 
   });
 
-  req.write(JSON.stringify(data));
+  req.write(jsonData);
+  req.end();
+
+}
+
+const authUser = function(data, callback) {
+  const jsonData = JSON.stringify(data);
+  const options = {
+    host: HOST,
+    port: 443,
+    path: '/auth/',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Content-Length': jsonData.length
+    }
+  };
+
+  const req = https.request(options, (res) => {
+
+    res.on('data', (d) => {
+      const authJson = JSON.parse(d);
+      callback(null, authJson);
+    });
+
+  });
+
+  req.on('error', (e) => {
+    console.error(e);
+    callback(e, null);
+  });
+
+  req.write(jsonData);
+  req.end();
+}
+
+const loginUser = function(login = "", password = "", callback) {
+
+  const loginJson = {
+    "email": login,
+    "senha": password
+  }
+
+  authUser(loginJson, (err, auth) => {
+    const options = {
+      host: HOST,
+      port: 443,
+      path: '/usuario/' + auth.idUsuario,
+      headers: {
+        Authorization: 'Bearer ' + auth.token
+      }
+    };
+
+
+    const req = https.get(options, (res) => {
+      res.on('data', (d) => {
+        const user = JSON.parse(d);
+        const userJson = {
+          token: auth.token,
+          ...user
+        }
+        callback(null, userJson);
+      });
+    });
+
+    req.on('error', (e) => {
+      console.error(e);
+      callback(e, null);
+    });
+
+    req.end();
+
+  });
+}
+
+
+const getBancoUser = function(token, cpf, callback) {
+  const options = {
+    host: HOST,
+    port: 443,
+    path: '/usuarioBanco/' + cpf,
+    headers: {
+      Authorization: 'Bearer ' + token
+    }
+  }
+
+  const req = https.get(options, (res) => {
+    res.on('data', (d) => {
+      const bancoUserJson = JSON.parse(d);
+      callback(null, bancoUserJson);
+    });
+  });
+
+  req.on('error', (e) => {
+    console.error(e);
+    callback(e, null);
+  });
+
+  req.end();
+
+}
+
+const createBancoUser = function(token, data, callback) {
+  const jsonData = JSON.stringify(data);
+  const options = {
+    host: HOST,
+    port: 443,
+    method: 'POST',
+    path: '/usuarioBanco/',
+    headers: {
+      Authorization: 'Bearer ' + token
+    }
+  }
+
+  const req = https.request(options, (res) => {
+    res.on('data', (d) => {
+      const bancoUserJson = JSON.parse(d);
+      callback(null, bancoUserJson);
+    });
+  });
+
+  req.on('error', (e) => {
+    console.error(e);
+    callback(e, null);
+  });
+
+  req.write(jsonData);
+  req.end();
+
+}
+
+const updateBancoUser = function(token, data, callback) {
+  const jsonData = JSON.stringify(data);
+  const options = {
+    host: HOST,
+    port: 443,
+    method: 'PATCH',
+    path: '/usuarioBanco/',
+    headers: {
+      Authorization: 'Bearer ' + token
+    }
+  }
+
+  const req = https.request(options, (res) => {
+    res.on('data', (d) => {
+      const bancoUserJson = JSON.parse(d);
+      callback(null, bancoUserJson);
+    });
+  });
+
+  req.on('error', (e) => {
+    console.error(e);
+    callback(e, null);
+  });
+
+  req.write(jsonData);
   req.end();
 
 }
@@ -130,5 +286,9 @@ module.exports = {
   criarUserData,
   atualizaUserData,
   criarIndicadoData,
-  createUser
+  createUser,
+  loginUser,
+  getBancoUser,
+  createBancoUser,
+  updateBancoUser
 };
