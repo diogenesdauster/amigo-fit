@@ -19,22 +19,23 @@
     </header>
     <section>
 
-      <form method="post"  class="form-cadastro">
+      <form method="post" class="form-cadastro" onsubmit="ValidaCadastro(window.event);">
         <span class="form-header">Cadastro</span>
         <label for="cpf">CPF</label>
-        <input name="cpf" type="text" placeholder="insera seu cpf"  class="form-input" />
+        <input name="cpf" type="text" placeholder="insera seu cpf" required maxlength="11" autocomplete="off" class="form-input" onkeydown="javascript: return EntradaNumerica(window.event);" onfocus="RemoveMak(window.event)" onblur="FormatarCPF(window.event.target)" />
         <label for="email">EMAIL</label>
-        <input name="email" type="text" placeholder="insera seu email"  class="form-input" />
+        <input name="email" type="text" placeholder="insera seu email" autocomplete="off" required class="form-input" />
         <label for="nome">NOME</label>
-        <input name="nome" type="text" placeholder="insera seu nome"  class="form-input" />
+        <input name="nome" type="text" placeholder="insera seu nome" required autocomplete="off" class="form-input" />
         <label for="celular">CELULAR</label>
-        <input name="celular" type="text" placeholder="insera seu celular"  class="form-input" />
+        <input name="celular" type="text" placeholder="insera seu celular" required autocomplete="off" maxlength="11" class="form-input" onkeydown="javascript: return EntradaNumerica(window.event);" onfocus="RemoveMak(window.event)" onblur="FormatarCelular(window.event.target)" />
         <label for="senha">SENHA</label>
-        <input name="senha" type="password" placeholder="Senha"  class="form-input" />
+        <input name="senha" type="password" placeholder="Senha" required class="form-input" />
         <input type="submit" value="SALVAR" class="button" />
       </form>
     </section>
   </main>
+  <script src="utils.js"></script>
 </body>
 
 </html>
