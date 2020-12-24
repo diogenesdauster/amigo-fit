@@ -4,7 +4,7 @@ const passport = require('passport');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const LocalStrategy = require('passport-local').Strategy;
-const helpers = require("./helpers");
+const {loginData, estatisticas, criarUserData, atualizaUserData, criarIndicadoData} = require("./api");
 
 
 const dbData = {
@@ -14,7 +14,7 @@ const dbData = {
 
 passport.use(new LocalStrategy(
   function(username, password, done){
-      const user = helpers.loginData(username, password, dbData.Users);
+      const user = loginData(username, password, dbData.Users);
 
       if(user){
         return done(null,user);
@@ -61,7 +61,7 @@ app.get("/logout", function(req, res){
 
 app.get("/", function(req,res, next){
     if(req.isAuthenticated()){
-        const dados = helpers.estatisticas(req.user.cpf, dbData);
+        const dados = estatisticas(req.user.cpf, dbData);
         res.render("index",{dados: dados});
      }else{
        res.redirect("/login");
@@ -82,7 +82,8 @@ app.post("/cadastro", function(req,res, next){
   if(req.isAuthenticated()) {
      res.redirect("/");
    } else {
-     helpers.criarUserData(req.body, dbData);
+     console.log(req.body);
+     criarUserData(req.body, dbData);
      res.redirect("/login");
   }
 });
@@ -102,7 +103,7 @@ app.get("/dadosbancarios", function(req,res, next){
 app.post("/dadosbancarios", function(req,res, next){
   if(req.isAuthenticated()) {
 
-    helpers.atualizaUserData(req.body, req.user, dbData)
+    atualizaUserData(req.body, req.user, dbData)
 
     res.redirect("/");
   } else {
@@ -122,7 +123,7 @@ app.get("/indicacoes", function(req,res, next){
 app.post("/indicacoes", function(req,res, next){
   if(req.isAuthenticated()) {
 
-    if(helpers.criarIndicadoData(req.body, req.user.cpf, dbData)){
+    if(criarIndicadoData(req.body, req.user.cpf, dbData)){
       res.redirect("/");
     }else {
       res.redirect("/indicacoes");
@@ -135,6 +136,6 @@ app.post("/indicacoes", function(req,res, next){
 });
 
 
-app.listen(process.env.PORT || 5000,function(){
+app.listen(process.env.PORT || 3000,function(){
   console.log("The server was started on port 5000");
 });
