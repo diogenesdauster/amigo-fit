@@ -4,7 +4,7 @@ const passport = require('passport');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const LocalStrategy = require('passport-local').Strategy;
-const {loginData, estatisticas, criarUserData, atualizaUserData, criarIndicadoData} = require("./api");
+const {loginData, estatisticas, criarUserData, atualizaUserData, criarIndicadoData, createUser} = require("./api");
 
 
 const dbData = {
@@ -82,9 +82,13 @@ app.post("/cadastro", function(req,res, next){
   if(req.isAuthenticated()) {
      res.redirect("/");
    } else {
-     console.log(req.body);
-     criarUserData(req.body, dbData);
-     res.redirect("/login");
+     createUser(req.body, function(err, user){
+       if(err){
+         res.redirect("/cadastro");
+       }else {
+         res.redirect("/login");
+       }
+     });
   }
 });
 
@@ -137,5 +141,5 @@ app.post("/indicacoes", function(req,res, next){
 
 
 app.listen(process.env.PORT || 3000,function(){
-  console.log("The server was started on port 5000");
+  console.log("The server was started on port 3000");
 });

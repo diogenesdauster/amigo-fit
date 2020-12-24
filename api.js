@@ -94,13 +94,14 @@ const estatisticas = function(cpf, data) {
 const createUser = function(data, callback) {
 
   const options = {
-    hostname: 'amigofit-ws.herokuapp.com',
-    port: 443,
-    path: '/usuario',
-    method: 'POST'
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'Content-Length': JSON.stringify(data).length
+      }
   };
 
-  const req = https.request(options, (res) => {
+  const req = https.request("https://amigofit-ws.herokuapp.com/usuario/", options, (res) => {
     console.log('statusCode:', res.statusCode);
     console.log('headers:', res.headers);
 
