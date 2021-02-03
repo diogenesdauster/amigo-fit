@@ -12,7 +12,10 @@ const {
   loginUser,
   getBancoUser,
   createBancoUser,
-  updateBancoUser
+  updateBancoUser,
+  getBancos,
+  createIndicacaoUser,
+  getIndicacaoBonusUser
 } = require("./api");
 
 
@@ -24,7 +27,6 @@ const dbData = {
 passport.use(new LocalStrategy(
   function(username, password, done) {
     loginUser(username, password, (err, user) => {
-      console.log(user);
       if (user) {
         return done(null, user);
       } else {
@@ -78,10 +80,26 @@ app.get("/logout", function(req, res) {
 
 app.get("/", function(req, res, next) {
   if (req.isAuthenticated()) {
-    const dados = estatisticas(req.user.cpf, dbData);
-    res.render("index", {
-      dados: dados
+    const { token, cpf} = req.user;
+    const ret = {
+      'dados' : {
+        'indicados': 0,
+        'ativos': 0,
+        'inativos':0,
+        'bonus': 0
+      }
+    }
+
+    getIndicacaoBonusUser(token, cpf , function(err, data){
+      if(data){
+          ret.dados.indicados = data.indicacoes;
+          ret.dados.ativos = data.ativacoes;
+          ret.dados.inativos = data.inativacoes;
+          ret.dados.bonus = data.totalBonus;
+      }
+      res.render("index", ret);
     });
+
   } else {
     res.redirect("/login");
   }
@@ -115,22 +133,36 @@ app.post("/cadastro", function(req, res, next) {
 app.get("/dadosbancarios", function(req, res, next) {
   if (req.isAuthenticated()) {
     const {token, cpf} = req.user;
-    getBancoUser(token, cpf, function(err, userBanco){
-      if(err){
+    const ret = { 'dados': {
+      'id': 0,
+      'banco': '',
+      'agencia': '',
+      'conta': '',
+      'tpconta': 'POUPANCA'
+    },
+      'bancos': []
+    };
+
+    getBancos(token, function(err, bancos){
+      if(bancos){
+        ret.bancos = bancos;
+      }else{
         console.log(err);
-      }else {
-        console.log('OK: ',userBanco);
       }
-    })
-    res.render("dadosbancarios", {
-      dados: {
-        'id': 0,
-        'banco': '',
-        'agencia': '',
-        'conta': '',
-        'tpconta': 'POUPANCA'
-      }
+
+      getBancoUser(token, cpf, function(err, userBanco){
+        if(userBanco){
+          ret.dados = userBanco;
+          res.render("dadosbancarios", ret);
+        }else {
+          console.log(err);
+          res.render("dadosbancarios", ret);
+        }
+      });
+
+
     });
+
   } else {
     res.redirect("/login");
   }
@@ -141,33 +173,32 @@ app.post("/dadosbancarios", function(req, res, next) {
     let { id: idBco  } = req.body;
     idBco = parseInt(idBco);
     const bancoJson = {
-      "usuario_cpf": req.user.cpf,
       "id": idBco,
-      "banco_codigo": req.body.banco,
-      "agencia": req.body.agencia,
       "conta": req.body.conta,
-      "tipoConta": req.body.tpconta
+      "agencia": req.body.agencia,
+      "tipoConta": req.body.tpconta,
+      "banco_codigo": req.body.banco,
+      "usuario_cpf": req.user.cpf
     }
     const { token } = req.user;
 
+
     if(idBco){
       updateBancoUser(token, bancoJson, function(err, bancoUser){
-        if(err){
+        if(bancoUser){
+          res.redirect("/");
+        }else{
           console.log(err);
           res.redirect("/dadosbancarios");
-        }else{
-          console.log('updateBancoUser:' ,bancoUser);
-          res.redirect("/");
         }
       });
     }else{
       createBancoUser(token, bancoJson, function(err, bancoUser){
-        if(err){
+        if(bancoUser){
+          res.redirect("/");
+        }else{
           console.log(err);
           res.redirect("/dadosbancarios");
-        }else{
-          console.log('createBancoUser:' ,bancoUser);
-          res.redirect("/");
         }
       });
     }
@@ -187,12 +218,23 @@ app.get("/indicacoes", function(req, res, next) {
 
 app.post("/indicacoes", function(req, res, next) {
   if (req.isAuthenticated()) {
-
-    if (criarIndicadoData(req.body, req.user.cpf, dbData)) {
-      res.redirect("/");
-    } else {
-      res.redirect("/indicacoes");
+    const {token, cpf} = req.user;
+    const data = {
+      "academiaId": 1,
+      "cpfIndicado": req.body.cpf,
+      "foneIndicado": req.body.celular,
+      "nomeIndicado": req.body.nome,
+      "usuarioCpf": cpf
     }
+
+    createIndicacaoUser( token , data , function(err, indicado){
+      if(indicado){
+        res.redirect("/");
+      } else {
+        console.log(err);
+        res.redirect("/indicacoes");
+      }
+    });
 
   } else {
 

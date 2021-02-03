@@ -108,6 +108,7 @@ const createUser = function(data, callback) {
   const req = https.request(options, (res) => {
 
     res.on('data', (d) => {
+      console.log(d)
       const userJson = JSON.parse(d);
       callback(null, userJson)
     });
@@ -141,8 +142,13 @@ const authUser = function(data, callback) {
   const req = https.request(options, (res) => {
 
     res.on('data', (d) => {
-      const authJson = JSON.parse(d);
-      callback(null, authJson);
+
+      if( res.statusCode === 200 ){
+        const authJson = JSON.parse(d);
+        callback(null, authJson);
+      }else{
+        callback("Login ou senha Invalidos!!", null);
+      }
     });
 
   });
@@ -164,33 +170,43 @@ const loginUser = function(login = "", password = "", callback) {
   }
 
   authUser(loginJson, (err, auth) => {
-    const options = {
-      host: HOST,
-      port: 443,
-      path: '/usuario/' + auth.idUsuario,
-      headers: {
-        Authorization: 'Bearer ' + auth.token
-      }
-    };
 
-
-    const req = https.get(options, (res) => {
-      res.on('data', (d) => {
-        const user = JSON.parse(d);
-        const userJson = {
-          token: auth.token,
-          ...user
+    if (auth) {
+      const options = {
+        host: HOST,
+        port: 443,
+        path: '/usuario/' + auth.idUsuario,
+        headers: {
+          Authorization: 'Bearer ' + auth.token
         }
-        callback(null, userJson);
+      };
+
+
+      const req = https.get(options, (res) => {
+        res.on('data', (d) => {
+          if(res.statusCode === 200){
+            const user = JSON.parse(d);
+            const userJson = {
+              token: auth.token,
+              ...user
+            }
+            callback(null, userJson);
+          } else {
+            callback("usuário não encontrado", null);
+          }
+        });
       });
-    });
 
-    req.on('error', (e) => {
-      console.error(e);
-      callback(e, null);
-    });
+      req.on('error', (e) => {
+        console.error("erro :" + e);
+        callback(e, null);
+      });
 
-    req.end();
+      req.end();
+
+    }else {
+      callback(err, null);
+    }
 
   });
 }
@@ -236,6 +252,7 @@ const createBancoUser = function(token, data, callback) {
 
   const req = https.request(options, (res) => {
     res.on('data', (d) => {
+
       const bancoUserJson = JSON.parse(d);
       callback(null, bancoUserJson);
     });
@@ -259,7 +276,8 @@ const updateBancoUser = function(token, data, callback) {
     method: 'PATCH',
     path: '/usuarioBanco/',
     headers: {
-      Authorization: 'Bearer ' + token
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token
     }
   }
 
@@ -274,8 +292,109 @@ const updateBancoUser = function(token, data, callback) {
     console.error(e);
     callback(e, null);
   });
+  req.write(jsonData);
+  req.end();
+
+}
+
+const getBancos = function(token, callback){
+  const options = {
+    host: HOST,
+    port: 443,
+    method: 'GET',
+    path: '/banco/',
+    headers: {
+      Authorization: 'Bearer ' + token
+    }
+  }
+  const req = https.request(options, (res) => {
+
+    let result = '';
+    res.on("data", (data) =>{
+        result += data;
+    });
+    res.on('end', () => {
+      const bancos = JSON.parse(result);
+      if (res.statusCode === 200){
+        callback(null, bancos);
+      } else {
+        callback(bancos.erros, null);
+      }
+    });
+
+
+  });
+
+  req.on('error', (e) => {
+    console.log(e);
+    callback(e, null);
+  });
+
+  req.end();
+
+}
+
+const createIndicacaoUser = function(token, data, callback) {
+  const jsonData = JSON.stringify(data);
+  const options = {
+    host: HOST,
+    port: 443,
+    method: 'POST',
+    path: '/indicacao/',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token
+    }
+  }
+
+  const req = https.request(options, (res) => {
+    res.on('data', (d) => {
+      if (res.statusCode === 201){
+        callback(null, true);
+      }else{
+        const { erros } = JSON.parse(d);
+        callback(erros[0], null);
+      }
+    });
+  });
+
+  req.on('error', (e) => {
+    console.error(e);
+    callback(e, null);
+  });
 
   req.write(jsonData);
+  req.end();
+
+}
+
+const getIndicacaoBonusUser = function(token, cpf,callback){
+  const options = {
+    host: HOST,
+    port: 443,
+    method: 'GET',
+    path: '/indicacaoBonus/' + cpf,
+    headers: {
+      Authorization: 'Bearer ' + token
+    }
+  }
+  const req = https.request(options, (res) => {
+
+    res.on("data", (d) =>{
+      const bonus = JSON.parse(d);
+      if (res.statusCode === 200){
+        callback(null, bonus);
+      } else {
+        callback(bonus.erros, null);
+      }
+    });
+  });
+
+  req.on('error', (e) => {
+    console.log(e);
+    callback(e, null);
+  });
+
   req.end();
 
 }
@@ -290,5 +409,8 @@ module.exports = {
   loginUser,
   getBancoUser,
   createBancoUser,
-  updateBancoUser
+  updateBancoUser,
+  getBancos,
+  createIndicacaoUser,
+  getIndicacaoBonusUser
 };

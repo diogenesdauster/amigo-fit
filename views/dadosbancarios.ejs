@@ -23,7 +23,11 @@
         <input type="hidden" name="id" value="<%=dados.id%>">
         <span class="form-header">Dados Bancarios</span>
         <label for="banco">BANCO</label>
-        <input name="banco" type="text" placeholder="digite o nome do seu banco" value="<%= dados.banco%>" class="form-input" />
+        <select class="form-input" name="banco">
+        <% for(var i = 0 ; i < bancos.length; i ++) { %>
+          <option value="<%= bancos[i].id %>" <%= dados.banco_codigo == bancos[i].id ? 'selected' : ''%>><%= bancos[i].nome %></option>
+        <% } %>
+        </select>
         <label for="agencia">AGÊNCIA</label>
         <input name="agencia" type="text" placeholder="XXXXXX" value="<%= dados.agencia%>"  class="form-input" />
         <label for="conta">CONTA</label>
