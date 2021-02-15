@@ -10,131 +10,30 @@ appearance: none;
 }
 
 body {
-  background-color: #1e4f6e;
-  color: white;
   font-family: 'Roboto', sans-serif;
-  text-align: center;
-  font-size:2.5rem;
-  font-weight: 300;
 }
 
-header {
-  background-color: #000000;
-}
-
-nav {
-  position: relative;
-  padding: 2rem;
-}
-
-label {
-  display: block;
-  text-align: left;
-  font-weight: 600;
-}
-
-.nav-logout {
-  cursor: pointer;
-  left: 0;
-  position: absolute;
-  color: white;
+.sair {
+  color: rgba(0,0,0,.5);
   text-decoration: none;
-  margin-left: 2rem;
 }
 
-.nav-profile {
-  cursor: pointer;
-  right: 0;
-  color: white;
-  position: absolute;
+.sair:hover {
+  color: rgba(0,0,0,.7);
   text-decoration: none;
-  margin-right: 2rem;
 }
 
-.nav-logout:visited {
-  color: inherit;
+img {
+  max-width: 100%;
 }
 
-.nav-profile:visited {
-  color: inherit;
+.estatisticas {
+  max-width: 36rem;
+  margin: 0 auto;
 }
 
-
-
-.container {
-  width: 100%;
-  max-width: 630px;
-  padding: 1rem;
-  margin: auto;
-  box-sizing: border-box;
-}
-
-.logo{
-  display: block;
-  margin: 2rem auto;
-}
-
-.capa{
-  width: 100%;
-  display: block;
-  margin: 2rem auto;
-  border-radius: 20px;
-}
-
-
-.estatistica {
-  background-color: #00324b;
-  margin-bottom: 2rem;
-  border-radius: 10px 10px 0 0;
-}
-
-.bonus {
-  width: 80%;
-  margin: 50px auto;
-  background-color: #00324b;
-  border-radius: 10px 10px 0 0;
-}
-
-.label-header {
-  color: black;
-  background-color: white;
-  opacity: 70%;
-  font-weight: 400;
-  font-size: 1.5rem;
-  padding-top:1rem;
-  border-radius: 10px 10px 0 0;
-}
-
-.card {
-  display: inline-block;
-  background-color: gray;
-  width: 190px;
-  height: 170px;
-  margin:0.5rem 0;
-}
-
-.card-label {
-  font-size: 1rem;
-  background-color: black;
-  padding: 1rem;
-}
-.card-body, .bonus-content {
-  font-size: 5rem;
-}
-
-
-
-.button {
-  display: inline-block;
-  margin-bottom: 50px;
-  width: 13rem;
-  border-radius: 100px;
-  padding: 0.5rem 1rem;
-  border: none;
-  font-size: 1.5rem;
-  font-weight: 600;
-  background-color: #f1363a;
-  text-decoration: none;
-  color: white;
-  cursor: pointer;
+@media (max-width: 375px) {
+  h4 {
+    font-size: 1rem;
+  }
 }

@@ -11,90 +11,45 @@ appearance: none;
 
 
 body {
-  background-color: #1e4f6e;
-  color: white;
   font-family: 'Roboto', sans-serif;
-  text-align: center;
-  font-size:2.5rem;
-  font-weight: 300;
 }
 
-header {
-  background-color: #000000;
-}
-
-nav {
-  position: relative;
-  padding: 2rem;
-}
-
-label {
-  display: block;
-  text-align: left;
-  font-weight: 600;
-}
-
-.nav-back {
-  cursor: pointer;
-  left: 0;
-  position: absolute;
+.sair {
+  color: rgba(0,0,0,.5);
   text-decoration: none;
 }
 
-.nav-back img {
-  width: 3rem;
-  padding-left: 3rem;
+.sair:hover {
+  color: rgba(0,0,0,.7);
+  text-decoration: none;
 }
 
-
-.form-cadastro {
+.form-signin {
   width: 100%;
   max-width: 530px;
   padding: 1rem;
   margin: auto;
 }
 
-.form-header {
-  display: inline-block;
-  padding: 1rem 8rem;
-  margin: 2rem 0;
-  background-color: #00324b;
-  border-radius: 10px;
-  font-weight: 600;
+.container {
+  margin-top: 3em;
 }
 
-.form-input {
-  display: block;
-  width: 100%;
-  padding: .375rem .75rem;
-  font-size: 2rem;
-  font-weight: 400;
-  line-height: 1.5;
-  border: none;
-  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+.card-title {
+  text-align: center;
 }
 
-.form-input::placeholder {
-  color: gray;
-  opacity: 0.5;
-  text-align: left;
+.text-secundary-color{
+  color: #f1363a;
 }
 
-.form-cadastro .form-input {
-  margin-bottom: 2rem;
-  box-sizing: border-box;
-}
-
-.button {
-  margin-top: 3rem;
-  width: 13rem;
-  border-radius: 100px;
-  background: white;
-  padding: 0.5rem 1rem;
-  border: none;
-  font-size: 1.5rem;
-  font-weight: 600;
+.bg-secundary-color{
   background-color: #f1363a;
-  color: white;
-  cursor: pointer;
+  border-color: #f1363a;
+}
+
+.bg-secundary-color:hover {
+  background-color: #f1363a;
+  border-color: #f1363a;
+  opacity: 0.75
 }
