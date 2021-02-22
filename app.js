@@ -30,9 +30,7 @@ passport.use(new LocalStrategy(
       if (user) {
         return done(null, user);
       } else {
-        return done(null, false, {
-          message: 'Incorrect username or password.'
-        });
+        return done(err, null);
       }
     })
   }
@@ -63,14 +61,38 @@ app.get("/login", function(req, res, next) {
   if (req.isAuthenticated()) {
     res.redirect('/');
   } else {
-    res.render("login");
+    res.render("login", { error:null } );
   }
 });
 
+/*
 app.post("/login", passport.authenticate('local', {
   successRedirect: '/',
   failureRedirect: '/login'
 }));
+*/
+
+
+app.post('/login', function(req, res) {
+  passport.authenticate('local', function(err, user) {
+    if (err) {
+      return res.render('login', { error: { message: err } });
+    }
+
+    if (!user) {
+      return res.render('login', { error: { message: "Ocorreu um erro ao tentar logar, tente novamente!" } });
+    }
+
+    req.logIn(user, function(err) {
+      if (err) {
+        console.log(err);
+        return res.render('login', { error: { message: "Ocorreu um erro ao tentar logar, tente novamente!" } });
+      }
+      return res.redirect('/');
+    });
+  })(req, res);
+});
+
 
 app.get("/logout", function(req, res) {
   req.logout();

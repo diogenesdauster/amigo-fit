@@ -147,7 +147,7 @@ const authUser = function(data, callback) {
         const authJson = JSON.parse(d);
         callback(null, authJson);
       }else{
-        callback("Login ou senha Invalidos!!", null);
+        callback("Login ou senha Inválidos!", null);
       }
     });
 
@@ -192,7 +192,7 @@ const loginUser = function(login = "", password = "", callback) {
             }
             callback(null, userJson);
           } else {
-            callback("usuário não encontrado", null);
+            callback("Login ou Senha Inválidos!", null);
           }
         });
       });

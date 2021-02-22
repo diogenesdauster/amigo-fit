@@ -21,6 +21,13 @@
 
   <main>
 
+     <div class="alert alert-danger alert-dismissible fade <%= error ? 'show' : ''  %>" role="alert">
+      <strong>Amigo Fit:</strong> <%= error ? error.message : ""  %>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+     </div>
+
     <section class="container">
       <div class="card form-signin" >
         <div class="card-body">

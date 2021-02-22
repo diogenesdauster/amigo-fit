@@ -46,13 +46,6 @@
 
   </nav>
 
-  <div class="alert alert-danger alert-dismissible fade <%= error ? 'show' : ''  %>" role="alert">
-   <strong>Amigo Fit:</strong> <%= error ? error.message : ""  %>
-   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-     <span aria-hidden="true">&times;</span>
-   </button>
-  </div>
-
   <section class="container">
     <div class="card form-signin" >
       <div class="card-body">
@@ -61,12 +54,7 @@
 
           <div class="form-group">
             <label for="cpf">CPF</label>
-            <input name="cpf" type="text" class="form-control" id="cpf"
-              onkeypress="javascript: return EntradaNumerica(event);"
-              onfocus="javascript: RemoveMak(event);"
-              onblur="javascript: FormatarCPF(event.target);"
-
-            >
+            <input name="cpf" type="text" class="form-control" id="cpf" >
           </div>
 
           <div class="form-group">
