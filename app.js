@@ -132,7 +132,7 @@ app.get("/cadastro", function(req, res, next) {
   if (req.isAuthenticated()) {
     res.redirect("/");
   } else {
-    res.render("cadastro");
+    res.render("cadastro", { error: null });
   }
 });
 
