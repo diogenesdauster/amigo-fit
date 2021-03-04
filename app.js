@@ -8,6 +8,7 @@ const {
   estatisticas,
   atualizaUserData,
   criarIndicadoData,
+  UpdateUser,
   createUser,
   loginUser,
   getBancoUser,
@@ -143,11 +144,50 @@ app.post("/cadastro", function(req, res, next) {
   } else {
     createUser(req.body, function(err, user) {
       if (err) {
-        res.redirect("/cadastro");
+        res.render("/cadastro", { error: { message: err } });
       } else {
         res.redirect("/login");
       }
     });
+  }
+});
+
+
+app.get("/dadospessoais", function(req, res, next) {
+  if (req.isAuthenticated()) {
+    res.render("dadospessoais", { data: {
+      cpf: req.user.cpf,
+      nome: req.user.nome,
+      email: req.user.email,
+      celular: req.user.celular
+    },
+    error: null 
+  
+    });
+  } else {
+    res.redirect("/");
+  }
+});
+
+app.post("/dadospessoais", function(req, res, next) {
+
+  if (req.isAuthenticated()) {
+    UpdateUser(req.body, function(err, user) {
+      if (err) {
+        res.render("/dadospessoais", { 
+           data: {
+            cpf: req.user.cpf,
+            nome: req.user.nome,
+            email: req.user.email,
+            celular: req.user.celular
+          },
+          error: { message: err } });
+      } else {
+        res.redirect("/login");
+      }
+    });
+  } else {
+    res.redirect("/");
   }
 });
 
@@ -162,7 +202,8 @@ app.get("/dadosbancarios", function(req, res, next) {
       'conta': '',
       'tpconta': 'POUPANCA'
     },
-      'bancos': []
+      'bancos': [],
+      'error': null
     };
 
     getBancos(token, function(err, bancos){
@@ -178,6 +219,7 @@ app.get("/dadosbancarios", function(req, res, next) {
           res.render("dadosbancarios", ret);
         }else {
           console.log(err);
+          ret.error = { message: err}
           res.render("dadosbancarios", ret);
         }
       });
@@ -211,7 +253,7 @@ app.post("/dadosbancarios", function(req, res, next) {
           res.redirect("/");
         }else{
           console.log(err);
-          res.redirect("/dadosbancarios");
+          res.render("/dadosbancarios",{error: {message: err }});
         }
       });
     }else{
@@ -220,7 +262,7 @@ app.post("/dadosbancarios", function(req, res, next) {
           res.redirect("/");
         }else{
           console.log(err);
-          res.redirect("/dadosbancarios");
+          res.render("/dadosbancarios",{error: {message: err }});
         }
       });
     }
@@ -232,7 +274,7 @@ app.post("/dadosbancarios", function(req, res, next) {
 
 app.get("/indicacoes", function(req, res, next) {
   if (req.isAuthenticated()) {
-    res.render("indicacoes");
+    res.render("indicacoes", {error: null});
   } else {
     res.redirect("/login");
   }
@@ -240,13 +282,23 @@ app.get("/indicacoes", function(req, res, next) {
 
 app.post("/indicacoes", function(req, res, next) {
   if (req.isAuthenticated()) {
-    const {token, cpf} = req.user;
+    const {token, cpf ,celular, email, nome} = req.user;
     const data = {
-      "academiaId": 1,
+      "academia": {
+        "chaveApi": token,
+        "id": 0,
+        "nome": "teste"
+      },
       "cpfIndicado": req.body.cpf,
       "foneIndicado": req.body.celular,
       "nomeIndicado": req.body.nome,
-      "usuarioCpf": cpf
+      "usuario": {
+        "celular": celular,
+        "cpf": cpf,
+        "email": email,
+        "nome": nome,
+        "senha": "string"
+      }
     }
 
     createIndicacaoUser( token , data , function(err, indicado){
@@ -254,7 +306,7 @@ app.post("/indicacoes", function(req, res, next) {
         res.redirect("/");
       } else {
         console.log(err);
-        res.redirect("/indicacoes");
+        res.redirect("/indicacoes", {error: {message: err}});
       }
     });
 

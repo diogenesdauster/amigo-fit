@@ -27,7 +27,7 @@
             <a class="nav-link" href="/dadosbancarios">Dados Bancarios</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/cadastro">Dados Cadastrais</a>
+            <a class="nav-link" href="/dadospessoais">Dados Cadastrais</a>
           </li>
           <li class="nav-item active">
             <a class="nav-link" href="#">Indicar</a>
@@ -45,6 +45,14 @@
       </div>
 
   </nav>
+
+
+  <div class="alert alert-danger alert-dismissible fade <%= error ? 'show' : ''  %>" role="alert">
+    <strong>Amigo Fit:</strong> <%= error ? error.message : ""  %>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+   </div>
 
   <section class="container">
     <div class="card form-signin" >

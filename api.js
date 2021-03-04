@@ -126,6 +126,41 @@ const createUser = function(data, callback) {
 
 }
 
+
+const UpdateUser = function(data, callback) {
+  const jsonData = JSON.stringify(data);
+  const options = {
+    host: HOST,
+    port: 443,
+    path: '/usuario/',
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      'Content-Length': jsonData.length
+    }
+  };
+
+  const req = https.request(options, (res) => {
+
+    res.on('data', (d) => {
+      console.log(d)
+      const userJson = JSON.parse(d);
+      callback(null, userJson)
+    });
+
+  });
+
+  req.on('error', (e) => {
+    console.error(e);
+    callback(e, null);
+
+  });
+
+  req.write(jsonData);
+  req.end();
+
+}
+
 const authUser = function(data, callback) {
   const jsonData = JSON.stringify(data);
   const options = {
@@ -353,7 +388,8 @@ const createIndicacaoUser = function(token, data, callback) {
         callback(null, true);
       }else{
         const { erros } = JSON.parse(d);
-        callback(erros[0], null);
+        console.log(JSON.parse(d))
+        callback(erros, null);
       }
     });
   });
@@ -405,6 +441,7 @@ module.exports = {
   criarUserData,
   atualizaUserData,
   criarIndicadoData,
+  UpdateUser,
   createUser,
   loginUser,
   getBancoUser,

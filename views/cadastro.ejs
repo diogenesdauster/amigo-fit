@@ -42,28 +42,39 @@
               onkeypress="javascript: return EntradaNumerica(event);"
               onfocus="javascript: RemoveMak(event);"
               onblur="javascript: FormatarCPF(event.target);"
-
             >
+            <div class="invalid-feedback">
+            </div>
           </div>
 
           <div class="form-group">
             <label for="email">EMAIL</label>
             <input name="email" type="email" class="form-control" id="email" >
+            <div class="invalid-feedback">
+            </div>           
           </div>
 
           <div class="form-group">
             <label for="nome">NOME</label>
             <input name="nome" type="text" class="form-control" id="nome" >
+            <div class="invalid-feedback">
+            </div>           
           </div>
 
           <div class="form-group">
             <label for="celular">CELULAR</label>
-            <input name="celular" type="text" class="form-control" id="celular" >
+            <input name="celular" type="text" class="form-control" id="celular" onkeypress="javascript: return EntradaNumerica(event);" 
+            onfocus="javascript: RemoveMak(event);"
+            onblur="javascript: FormatarCelular(event.target);">
+            <div class="invalid-feedback">
+            </div>           
           </div>
 
           <div class="form-group">
             <label for="senha">SENHA</label>
             <input name="senha" type="password" type="senha" class="form-control" id="senha" >
+            <div class="invalid-feedback">
+            </div>                       
           </div>
 
 

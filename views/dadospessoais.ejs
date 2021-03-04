@@ -46,47 +46,70 @@
 
   </nav>
 
-  <section class="container">
-    <div class="card form-signin" >
-      <div class="card-body">
-        <h2 class="card-title">Cadastro</h2>
-        <form method="post"  onsubmit="ValidaCadastro(window.event);">
-
-          <div class="form-group">
-            <label for="cpf">CPF</label>
-            <input name="cpf" type="text" class="form-control" id="cpf" >
-          </div>
-
-          <div class="form-group">
-            <label for="email">EMAIL</label>
-            <input name="email" type="email" class="form-control" id="email" >
-          </div>
-
-          <div class="form-group">
-            <label for="nome">NOME</label>
-            <input name="nome" type="text" class="form-control" id="nome" >
-          </div>
-
-          <div class="form-group">
+  <div class="alert alert-danger alert-dismissible fade <%= error ? 'show' : ''  %>" role="alert">
+    <strong>Amigo Fit:</strong> <%= error ? error.message : ""  %>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+   </div>
+ 
+   <section class="container">
+     <div class="card form-signin" >
+       <div class="card-body">
+         <h2 class="card-title">Cadastro</h2>
+         <form method="post"  onsubmit="ValidaCadastro(window.event);">
+ 
+           <div class="form-group">
+             <label for="cpf">CPF</label>
+             <input name="cpf" type="text" class="form-control" id="cpf"
+               onkeypress="javascript: return EntradaNumerica(event);"
+               onfocus="javascript: RemoveMak(event);"
+               onblur="javascript: FormatarCPF(event.target);"
+               value="<%= data.cpf%>"
+             >
+             <div class="invalid-feedback">
+             </div>
+           </div>
+ 
+           <div class="form-group">
+             <label for="email">EMAIL</label>
+             <input name="email" type="email" class="form-control" id="email" value="<%= data.email%>" >
+             <div class="invalid-feedback">
+             </div>           
+           </div>
+ 
+           <div class="form-group">
+             <label for="nome">NOME</label>
+             <input name="nome" type="text" class="form-control" id="nome" value="<%= data.nome%>" >
+             <div class="invalid-feedback">
+             </div>           
+           </div>
+ 
+           <div class="form-group">
             <label for="celular">CELULAR</label>
-            <input name="celular" type="text" class="form-control" id="celular" >
+            <input name="celular" type="text" class="form-control" id="celular" onkeypress="javascript: return EntradaNumerica(event);" 
+            onfocus="javascript: RemoveMak(event);"
+            onblur="javascript: FormatarCelular(event.target);">
+            <div class="invalid-feedback">
+            </div>           
           </div>
-
-          <div class="form-group">
-            <label for="senha">SENHA</label>
-            <input name="senha" type="password" type="senha" class="form-control" id="senha" >
-          </div>
-
-
-          <button type="submit" type="button" class="btn btn-primary btn-lg btn-block bg-secundary-color">Salvar</button>
-
-        </form>
-
-      </div>
-    </div>
-
-  </section>
-
+ 
+           <div class="form-group">
+             <label for="senha">SENHA</label>
+             <input name="senha" type="password" type="senha" class="form-control" id="senha" >
+             <div class="invalid-feedback">
+             </div>                       
+           </div>
+ 
+ 
+           <button type="submit" type="button" class="btn btn-primary btn-lg btn-block bg-secundary-color">Salvar</button>
+ 
+         </form>
+ 
+       </div>
+     </div>
+ 
+   </section>
 
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>

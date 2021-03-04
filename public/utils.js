@@ -36,8 +36,8 @@ function ValidaCelular(strCelular) {
 }
 
 function ValidaEmail(strEmail) {
-  const mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-  return strEmail.match(mailformat)
+  const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(strEmail);
 }
 
 function ValidaSenha(strSenha){
@@ -140,50 +140,80 @@ function ValidaCadastro(event) {
   document.querySelector("input[name=cpf]").value = ApenasNumeros(document.querySelector("input[name=cpf]").value);
   document.querySelector("input[name=celular]").value = ApenasNumeros(document.querySelector("input[name=celular]").value);
 
-  let cpf = document.querySelector("input[name=cpf]").value;
-  let nome = document.querySelector("input[name=nome]").value;
-  let email = document.querySelector("input[name=email]").value;
-  let celular = document.querySelector("input[name=celular]").value;
-  let senha = document.querySelector("input[name=senha]").value;
+  let cpf = document.querySelector("input[name=cpf]");
+  let nome = document.querySelector("input[name=nome]");
+  let email = document.querySelector("input[name=email]");
+  let celular = document.querySelector("input[name=celular]");
+  let senha = document.querySelector("input[name=senha]");
 
+  cpf.classList.remove("is-invalid");
+  nome.classList.remove("is-invalid");
+  email.classList.remove("is-invalid");
+  celular.classList.remove("is-invalid");
+  senha.classList.remove("is-invalid");
 
-  if(!ValidaCPF(cpf)){
+    
+  if(!ValidaCPF(cpf.value)){
       event.preventDefault();
-      document.querySelector("input[name=cpf]").focus();
-      alert("O CPF informado não é valido.");
+      FormatarCelular(celular);
+      cpf.focus();
+
+      const validacao = cpf.nextElementSibling;
+      validacao.innerText = "O CPF informado não é valido.";
+      cpf.classList.add("is-invalid");
+
       return false;
   }
 
-  if(!ValidaNome(nome)){
+  if(!ValidaNome(nome.value)){
       event.preventDefault();
-      FormatarCPF(document.querySelector("input[name=cpf]"));
-      document.querySelector("input[name=nome]").focus();
-      alert("O nome digitado é muito curto.");
+      FormatarCPF(cpf);
+      FormatarCelular(celular);
+
+      nome.focus();
+
+      const validacao = nome.nextElementSibling;
+      validacao.innerText = "O nome digitado é muito curto.";
+      nome.classList.add("is-invalid");
+     
       return false;
   }
 
-  if(!ValidaEmail(email)){
+  if(!ValidaEmail(email.value)){
       event.preventDefault();
-      FormatarCPF(document.querySelector("input[name=cpf]"));
-      document.querySelector("input[name=email]").focus();
-      alert("O email informado não é valido.");
+      FormatarCPF(cpf);
+      FormatarCelular(celular);
+
+      email.focus();
+
+      const validacao = email.nextElementSibling;
+      validacao.innerText = "O email informado não é valido.";
+      email.classList.add("is-invalid");
+
       return false;
   }
 
-  if(!ValidaCelular(celular)){
+  if(!ValidaCelular(celular.value)){
       event.preventDefault();
-      FormatarCPF(document.querySelector("input[name=cpf]"));
-      document.querySelector("input[name=celular]").focus();
-      alert("O celular informado não é valido, por favor verifique se o mesmo possui 11/10 digitos contando com DDD.");
+      FormatarCPF(cpf);
+      celular.focus();
+
+      const validacao = celular.nextElementSibling;
+      validacao.innerText = "O celular informado não é valido, por favor verifique se o mesmo possui 11/10 digitos contando com DDD.";
+      celular.classList.add("is-invalid");
+
       return false;
   }
 
-  if(!ValidaSenha(senha)){
+  if(!ValidaSenha(senha.value)){
       event.preventDefault();
-      FormatarCPF(document.querySelector("input[name=cpf]"));
-      FormatarCelular(document.querySelector("input[name=celular]"));
-      document.querySelector("input[name=senha]").focus();
-      alert("A senha informada deve conter no minimo 6 digitos.");
+      FormatarCPF(cpf);
+      FormatarCelular(celular);
+      senha.focus();
+
+      const validacao = senha.nextElementSibling;
+      validacao.innerText = "A senha informada deve conter no minimo 6 digitos.";
+      senha.classList.add("is-invalid");
 
       return false;
   }
