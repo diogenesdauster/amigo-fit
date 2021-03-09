@@ -224,26 +224,55 @@ function ValidaCadastro(event) {
 
 
 function ValidaIndicacao(event) {
-  let cpf = document.querySelector("input[name=cpf]").value;
-  let nome = document.querySelector("input[name=nome]").value;
-  let celular = document.querySelector("input[name=celular]").value;
 
-  if(!ValidaCPF(ApenasNumeros(cpf))){
-      event.preventDefault();
-      alert("O CPF informado não é valido.");
-      return false;
+
+  document.querySelector("input[name=cpf]").value = ApenasNumeros(document.querySelector("input[name=cpf]").value);
+  document.querySelector("input[name=celular]").value = ApenasNumeros(document.querySelector("input[name=celular]").value);
+
+  let cpf = document.querySelector("input[name=cpf]");
+  let nome = document.querySelector("input[name=nome]");
+  let celular = document.querySelector("input[name=celular]");
+
+  cpf.classList.remove("is-invalid");
+  nome.classList.remove("is-invalid");
+  celular.classList.remove("is-invalid");
+
+  if(!ValidaCPF(cpf.value)){
+    event.preventDefault();
+    FormatarCelular(celular);
+    cpf.focus();
+
+    const validacao = cpf.nextElementSibling;
+    validacao.innerText = "O CPF informado não é valido.";
+    cpf.classList.add("is-invalid");
+
+    return false;
   }
 
-  if(!ValidaNome(nome)){
-      event.preventDefault();
-      alert("O nome digitado é muito curto.");
-      return false;
+  if(!ValidaNome(nome.value)){
+    event.preventDefault();
+    FormatarCPF(cpf);
+    FormatarCelular(celular);
+
+    nome.focus();
+
+    const validacao = nome.nextElementSibling;
+    validacao.innerText = "O nome digitado é muito curto.";
+    nome.classList.add("is-invalid");
+  
+    return false;
   }
 
-  if(!ValidaCelular(ApenasNumeros(celular))){
-      event.preventDefault();
-      alert("O celular informado não é valido, por favor verifique se o mesmo possui 11/10 digitos contando com DDD.");
-      return false;
+  if(!ValidaCelular(celular.value)){
+    event.preventDefault();
+    FormatarCPF(cpf);
+    celular.focus();
+
+    const validacao = celular.nextElementSibling;
+    validacao.innerText = "O celular informado não é valido, por favor verifique se o mesmo possui 11/10 digitos contando com DDD.";
+    celular.classList.add("is-invalid");
+
+    return false;
   }
 
     return true;

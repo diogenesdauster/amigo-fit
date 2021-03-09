@@ -285,19 +285,19 @@ app.post("/indicacoes", function(req, res, next) {
     const {token, cpf ,celular, email, nome} = req.user;
     const data = {
       "academia": {
-        "chaveApi": token,
-        "id": 0,
-        "nome": "teste"
+        "chaveApi": "",
+        "id": 1,
+        "nome": ""
       },
       "cpfIndicado": req.body.cpf,
       "foneIndicado": req.body.celular,
       "nomeIndicado": req.body.nome,
       "usuario": {
-        "celular": celular,
+        "celular": "",
         "cpf": cpf,
-        "email": email,
-        "nome": nome,
-        "senha": "string"
+        "email": "",
+        "nome": "",
+        "senha": ""
       }
     }
 

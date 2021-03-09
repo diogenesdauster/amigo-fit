@@ -383,16 +383,25 @@ const createIndicacaoUser = function(token, data, callback) {
   }
 
   const req = https.request(options, (res) => {
-    res.on('data', (d) => {
+
+    let result = '';
+    res.on("data", (data) =>{
+        result += data;
+    });
+    
+    res.on('end', () => {
       if (res.statusCode === 201){
         callback(null, true);
       }else{
-        const { erros } = JSON.parse(d);
-        console.log(JSON.parse(d))
+        const { erros } = JSON.parse(result);
+        console.log(JSON.parse(result));
         callback(erros, null);
       }
-    });
+    }); 
+
   });
+
+
 
   req.on('error', (e) => {
     console.error(e);

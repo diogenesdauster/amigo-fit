@@ -58,7 +58,7 @@
     <div class="card form-signin" >
       <div class="card-body">
         <h2 class="card-title">Dados Bancarios</h2>
-        <form method="post"  onsubmit="ValidaCadastro(window.event);">
+        <form method="post"  onsubmit="ValidaDadosBancarios(window.event);">
           <input type="hidden" name="id" value="<%=dados.id%>">
 
           <div class="form-group">
@@ -72,12 +72,18 @@
 
           <div class="form-group">
             <label for="agencia">AGÊNCIA</label>
-            <input name="agencia" type="text" class="form-control" id="agencia" value="<%= dados.agencia%>"  >
+            <input name="agencia" type="text" class="form-control" id="agencia" value="<%= dados.agencia%>"  
+            onkeypress="javascript: return EntradaNumerica(event);"
+            >
+            <div class="invalid-feedback">
+            </div>    
           </div>
 
           <div class="form-group">
             <label for="conta">CONTA</label>
             <input name="conta" type="text" class="form-control" id="conta" value="<%= dados.conta%>" >
+            <div class="invalid-feedback">
+            </div>    
           </div>
 
           <div class="form-group">
@@ -86,6 +92,8 @@
               <option value="CONTA_CORRENTE" <%= dados.tpconta == 'CONTA_CORRENTE' ? 'selected' : ''%>>CONTA CORRENTE</option>
               <option value="POUPANCA" <%= dados.tpconta == 'POUPANCA' ? 'selected' : ''%>>POUPANCA</option>
             </select>
+            <div class="invalid-feedback">
+            </div>    
           </div>
 
 
