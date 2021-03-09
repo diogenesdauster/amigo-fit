@@ -246,9 +246,12 @@ app.post("/dadosbancarios", function(req, res, next) {
     }
     const { token } = req.user;
 
+    console.log(bancoJson)
+    console.log(token)
 
     if(idBco){
       updateBancoUser(token, bancoJson, function(err, bancoUser){
+        console.log("updateBancoUser",bancoUser);
         if(bancoUser){
           res.redirect("/");
         }else{
@@ -258,6 +261,8 @@ app.post("/dadosbancarios", function(req, res, next) {
       });
     }else{
       createBancoUser(token, bancoJson, function(err, bancoUser){
+        console.log("createBancoUser",bancoUser);
+        console.log(bancoUser)
         if(bancoUser){
           res.redirect("/");
         }else{

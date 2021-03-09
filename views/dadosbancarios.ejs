@@ -59,7 +59,7 @@
       <div class="card-body">
         <h2 class="card-title">Dados Bancarios</h2>
         <form method="post"  onsubmit="ValidaDadosBancarios(window.event);">
-          <input type="hidden" name="id" value="<%=dados.id%>">
+          <input type="hidden" name="id" value="<%= isNaN(dados.id) ? 0 : dados.id  %>">
 
           <div class="form-group">
             <label for="banco">BANCO</label>
