@@ -57,7 +57,7 @@
      <div class="card form-signin" >
        <div class="card-body">
          <h2 class="card-title">Cadastro</h2>
-         <form method="post"  onsubmit="ValidaCadastro(window.event);">
+         <form method="post"  onsubmit="ValidaCadastro(window.event, false);">
  
            <div class="form-group">
              <label for="cpf">CPF</label>
@@ -65,6 +65,7 @@
                onkeypress="javascript: return EntradaNumerica(event);"
                onfocus="javascript: RemoveMak(event);"
                onblur="javascript: FormatarCPF(event.target);"
+               disabled
                value="<%= data.cpf%>"
              >
              <div class="invalid-feedback">
@@ -88,20 +89,22 @@
            <div class="form-group">
             <label for="celular">CELULAR</label>
             <input name="celular" type="text" class="form-control" id="celular" 
+            value="<%= data.celular%>"
             onkeypress="javascript: return EntradaNumerica(event);" 
             onfocus="javascript: RemoveMak(event);"
             onblur="javascript: FormatarCelular(event.target);">
             <div class="invalid-feedback">
             </div>           
           </div>
- 
+          
+          <!--          
            <div class="form-group">
              <label for="senha">SENHA</label>
              <input name="senha" type="password" type="senha" class="form-control" id="senha" >
              <div class="invalid-feedback">
              </div>                       
            </div>
- 
+          -->
  
            <button type="submit" type="button" class="btn btn-primary btn-lg btn-block bg-secundary-color">Salvar</button>
  

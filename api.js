@@ -108,7 +108,6 @@ const createUser = function(data, callback) {
   const req = https.request(options, (res) => {
 
     res.on('data', (d) => {
-      console.log(d)
       const userJson = JSON.parse(d);
       callback(null, userJson)
     });
@@ -127,7 +126,7 @@ const createUser = function(data, callback) {
 }
 
 
-const UpdateUser = function(data, callback) {
+const UpdateUser = function(token, data, callback) {
   const jsonData = JSON.stringify(data);
   const options = {
     host: HOST,
@@ -136,14 +135,16 @@ const UpdateUser = function(data, callback) {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token,
       'Content-Length': jsonData.length
     }
+
   };
+
 
   const req = https.request(options, (res) => {
 
     res.on('data', (d) => {
-      console.log(d)
       const userJson = JSON.parse(d);
       callback(null, userJson)
     });

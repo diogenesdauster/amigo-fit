@@ -49,8 +49,11 @@
   </nav>
 
   <section class="container">
-    <img src="./assets/capa.jpg" class="d-block ml-auto mr-auto mt-4" alt="capa" class="capa">
-    <h2 class="text-center p-3">Estatísticas</h2>
+    <div id="player" class="d-block ml-auto mr-auto mt-4">
+      <img src="./assets/capa.jpg"  alt="capa" class="capa">
+    </div>
+    
+    <h2 class="text-center p-3">DashBoard</h2>
 
     <div class="estatisticas">
 
@@ -106,6 +109,41 @@
 
 
   </section>
+
+  <script>
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    document.getElementById("player").innerHTML = "";
+    
+      var player;
+      function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+          height: '370',
+          width: '600',
+          videoId: 'MrY3je1gMMo',
+          playerVars: { 'autoplay': 1, 'controls': 0 },
+          events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange
+          }
+        });
+      }
+
+      function onPlayerReady() {
+        player.mute();
+        player.playVideo();
+      }
+
+      var done = false;
+      function onPlayerStateChange(event) {
+        if (event.data == YT.PlayerState.ENDED || event.data == YT.PlayerState.PAUSED || event.data == YT.PlayerState.CUED) {
+          onPlayerReady();
+        }
+      }
+  </script>
+
 
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>

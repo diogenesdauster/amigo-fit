@@ -135,7 +135,7 @@ function EntradaNumerica(evt) {
         return false;
 }
 
-function ValidaCadastro(event) {
+function ValidaCadastro(event,validaSenha = true) {
 
   document.querySelector("input[name=cpf]").value = ApenasNumeros(document.querySelector("input[name=cpf]").value);
   document.querySelector("input[name=celular]").value = ApenasNumeros(document.querySelector("input[name=celular]").value);
@@ -205,17 +205,19 @@ function ValidaCadastro(event) {
       return false;
   }
 
-  if(!ValidaSenha(senha.value)){
-      event.preventDefault();
-      FormatarCPF(cpf);
-      FormatarCelular(celular);
-      senha.focus();
+  if (validaSenha) {
+    if(!ValidaSenha(senha.value)){
+        event.preventDefault();
+        FormatarCPF(cpf);
+        FormatarCelular(celular);
+        senha.focus();
 
-      const validacao = senha.nextElementSibling;
-      validacao.innerText = "A senha informada deve conter no minimo 6 digitos.";
-      senha.classList.add("is-invalid");
+        const validacao = senha.nextElementSibling;
+        validacao.innerText = "A senha informada deve conter no minimo 6 digitos.";
+        senha.classList.add("is-invalid");
 
-      return false;
+        return false;
+    }
   }
 
     return true;

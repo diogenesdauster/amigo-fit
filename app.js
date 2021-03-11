@@ -172,7 +172,17 @@ app.get("/dadospessoais", function(req, res, next) {
 app.post("/dadospessoais", function(req, res, next) {
 
   if (req.isAuthenticated()) {
-    UpdateUser(req.body, function(err, user) {
+    const { token } = req.user;
+
+    const data = {
+        cpf: req.user.cpf,
+        nome: req.body.nome,
+        email: req.body.email,
+        celular: req.body.celular
+    } 
+
+
+    UpdateUser(token, data, function(err, user) {
       if (err) {
         res.render("/dadospessoais", { 
            data: {
@@ -183,11 +193,11 @@ app.post("/dadospessoais", function(req, res, next) {
           },
           error: { message: err } });
       } else {
-        res.redirect("/login");
+        res.redirect("/");
       }
     });
   } else {
-    res.redirect("/");
+    res.redirect("/login");
   }
 });
 
