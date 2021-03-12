@@ -193,6 +193,9 @@ app.post("/dadospessoais", function(req, res, next) {
           },
           error: { message: err } });
       } else {
+        req.user.nome = user.nome;
+        req.user.email = user.email;
+        req.user.celular = user.celular;
         res.redirect("/");
       }
     });

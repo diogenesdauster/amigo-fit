@@ -138,7 +138,7 @@
 
       var done = false;
       function onPlayerStateChange(event) {
-        if (event.data == YT.PlayerState.ENDED || event.data == YT.PlayerState.PAUSED || event.data == YT.PlayerState.CUED) {
+        if (event.data == YT.PlayerState.ENDED  || event.data == YT.PlayerState.CUED) {
           onPlayerReady();
         }
       }

@@ -145,8 +145,14 @@ const UpdateUser = function(token, data, callback) {
   const req = https.request(options, (res) => {
 
     res.on('data', (d) => {
+
       const userJson = JSON.parse(d);
-      callback(null, userJson)
+      if( res.statusCode === 200 ){
+        callback(null, userJson);
+      }else {
+        console.log(userJson);
+        callback(userJson.error, null);
+      }
     });
 
   });
