@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="./css/cadastro.css">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;900&display=swap" rel="stylesheet">
-  <title>Cadastro</title>
+  <title>Alterar Senha</title>
 </head>
 
 <body class="bg-light">
@@ -33,50 +33,15 @@
   <section class="container">
     <div class="card form-signin" >
       <div class="card-body">
-        <h2 class="card-title">Cadastro</h2>
-        <form method="post"  onsubmit="ValidaCadastro(window.event);">
-
-          <div class="form-group">
-            <label for="cpf">CPF</label>
-            <input name="cpf" type="text" class="form-control" id="cpf"
-              onkeypress="javascript: return EntradaNumerica(event);"
-              onfocus="javascript: RemoveMak(event);"
-              onblur="javascript: FormatarCPF(event.target);"
-              required >
-            <div class="invalid-feedback">
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="nome">NOME</label>
-            <input name="nome" type="text" class="form-control" id="nome" required >
-            <div class="invalid-feedback">
-            </div>           
-          </div>
-
-          <div class="form-group">
-            <label for="email">EMAIL</label>
-            <input name="email" type="email" class="form-control" id="email" required>
-            <div class="invalid-feedback">
-            </div>           
-          </div>          
-
-          <div class="form-group">
-            <label for="celular">CELULAR</label>
-            <input name="celular" type="text" class="form-control" id="celular" onkeypress="javascript: return EntradaNumerica(event);" 
-            onfocus="javascript: RemoveMak(event);"
-            onblur="javascript: FormatarCelular(event.target);">
-            <div class="invalid-feedback" required>
-            </div>           
-          </div>
+        <h2 class="card-title">Alterar Senha</h2>
+        <form method="post"  onsubmit="ValidaASenha(window.event);">
 
           <div class="form-group">
             <label for="senha">SENHA</label>
-            <input name="senha" type="password" type="senha" class="form-control" id="senha" required>
+            <input name="senha" type="password" type="senha" class="form-control" id="senha" >
             <div class="invalid-feedback">
             </div>                       
           </div>
-
 
           <button type="submit" type="button" class="btn btn-primary btn-lg btn-block bg-secundary-color">Salvar</button>
 

@@ -135,6 +135,28 @@ function EntradaNumerica(evt) {
         return false;
 }
 
+
+function ValidaASenha(event) {
+  let senha = document.querySelector("input[name=senha]");
+
+  senha.classList.remove("is-invalid");
+
+  if (validaSenha) {
+    if(!ValidaSenha(senha.value)){
+        event.preventDefault();
+        senha.focus();
+
+        const validacao = senha.nextElementSibling;
+        validacao.innerText = "A senha informada deve conter no minimo 6 digitos.";
+        senha.classList.add("is-invalid");
+
+        return false;
+    }
+  }
+
+    return true;
+}
+
 function ValidaCadastro(event,validaSenha = true) {
 
   document.querySelector("input[name=cpf]").value = ApenasNumeros(document.querySelector("input[name=cpf]").value);

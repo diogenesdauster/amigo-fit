@@ -5,9 +5,6 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const LocalStrategy = require('passport-local').Strategy;
 const {
-  estatisticas,
-  atualizaUserData,
-  criarIndicadoData,
   UpdateUser,
   createUser,
   loginUser,
@@ -16,7 +13,8 @@ const {
   updateBancoUser,
   getBancos,
   createIndicacaoUser,
-  getIndicacaoBonusUser
+  getIndicacaoBonusUser,
+  esqueciSenhaUser
 } = require("./api");
 
 
@@ -178,6 +176,36 @@ app.post("/cadastro", function(req, res, next) {
     });
   }
 });
+
+
+app.get("/alterarSenha", function(req, res, next) {
+  res.render("alterarsenha", { error: null });
+});
+
+app.post("/alterarSenha", function(req, res, next) {
+
+  if(req.query.token){
+
+    const data = {
+      "novaSenha": req.body.senha,
+      "token": req.query.token
+    }
+  
+    esqueciSenhaUser(data, function(err,sucess) {
+      if(sucess){
+        res.redirect("/login");
+      }else {
+        res.render("alterarsenha", { error: err });
+      }
+    });
+
+  }else {
+    res.render("alterarsenha", { error: "Token Invalido, operação não permitida, tente novamente!!" });
+  }
+
+});
+
+
 
 
 app.get("/dadospessoais", function(req, res, next) {

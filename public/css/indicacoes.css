@@ -54,3 +54,7 @@ body {
   border-color: #f1363a;
   opacity: 0.75
 }
+
+.bg-light {
+  background-color: #1e4f6e!important;
+}

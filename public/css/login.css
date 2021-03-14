@@ -67,8 +67,12 @@ header {
   text-align: center;
   display: block;
   margin: auto;
-  background: black;
+  background:#201e1e;
   border-radius: 16px;
   padding: 1em;
   max-width: 100%;
+}
+
+.bg-light {
+  background-color: #1e4f6e!important;
 }

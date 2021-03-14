@@ -361,6 +361,40 @@ const getIndicacaoBonusUser = function(token, cpf,callback){
 
 }
 
+
+
+const esqueciSenhaUser = function(data, callback) {
+  const jsonData = JSON.stringify(data);
+  const options = {
+    host: HOST,
+    port: 443,
+    method: 'PATCH',
+    path: '/usuarioSenha/alterarSenha'
+  }
+
+  const req = https.request(options, (res) => {
+    res.on('data', (d) => {
+      
+      if(res.statusCode == 204) {
+        callback(null, true);
+      }else {
+        const response = JSON.parse(d);
+        callback(response.error, null);
+      }
+            
+    });
+  });
+
+  req.on('error', (e) => {
+    console.error(e);
+    callback(e, null);
+  });
+
+  req.write(jsonData);
+  req.end();
+
+}
+
 module.exports = {
   UpdateUser,
   createUser,
@@ -370,5 +404,6 @@ module.exports = {
   updateBancoUser,
   getBancos,
   createIndicacaoUser,
-  getIndicacaoBonusUser
+  getIndicacaoBonusUser,
+  esqueciSenhaUser
 };
