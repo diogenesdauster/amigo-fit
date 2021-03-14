@@ -299,7 +299,10 @@ function ValidaIndicacao(event) {
     return false;
   }
 
-    return true;
+
+
+
+  return true;
 }
 
 
@@ -331,5 +334,44 @@ function ValidaDadosBancarios(event) {
     return true;
 }
 
+function ValidaCPF(token) {
+  document.querySelector("input[name=cpf]").value = ApenasNumeros(document.querySelector("input[name=cpf]").value);
+  let cpf = document.querySelector("input[name=cpf]");
 
+  if(cpf.value.length >= 11) {
+    if (verificaCpf(cpf.value,token)){      
+      cpf.focus();      
+      const validacao = cpf.nextElementSibling;
+      validacao.innerText = "O CPF informado já foi indicado.";
+      cpf.classList.add("is-invalid");
+    }  
+  }
+}
 
+function verificaCpf(cpf, token) {
+  const options = {
+      method: 'GET',
+      headers: {
+        'Authorization' : 'Bearer '+ token
+      }, 
+      mode: 'cors'        
+  }
+  const URL = `https://amigofit-ws.herokuapp.com/indicacao/${cpf}/1`
+
+  return ( async function () {
+    return await fetch(URL, options)
+    .then( response => {           
+      return response.json().then( valid => {
+          if (response.status === 200 ) {  
+              return valid;
+          }else {              
+              return false;
+          }
+      });
+    }).catch(error => {
+      console.log(error);
+      return false;
+    });
+  })();
+  
+}

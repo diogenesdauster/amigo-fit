@@ -138,7 +138,11 @@ app.get("/", function(req, res, next) {
       }
     }
 
+    
+
     getIndicacaoBonusUser(token, cpf , function(err, data){
+      console.log(token)
+      console.log(data)
       if(data){
           ret.dados.indicados = data.indicacoes;
           ret.dados.ativos = data.ativacoes;
@@ -347,7 +351,7 @@ app.post("/dadosbancarios", function(req, res, next) {
 
 app.get("/indicacoes", function(req, res, next) {
   if (req.isAuthenticated()) {
-    res.render("indicacoes", {error: null});
+    res.render("indicacoes", {error: null,data: {token: req.user.token } });
   } else {
     res.redirect("/login");
   }
@@ -379,7 +383,7 @@ app.post("/indicacoes", function(req, res, next) {
         res.redirect("/");
       } else {
         console.log(err);
-        res.redirect("/indicacoes", {error: {message: err}});
+        res.redirect("/indicacoes", {error: {message: err},data: {token: req.user.token } });
       }
     });
 
@@ -388,7 +392,6 @@ app.post("/indicacoes", function(req, res, next) {
     res.redirect("/login");
   }
 });
-
 
 app.listen(process.env.PORT || 3000, function() {
   console.log("The server was started on port 3000");

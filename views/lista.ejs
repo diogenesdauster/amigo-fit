@@ -65,7 +65,11 @@
     
               <tr>
                 <td><%= user.nomeIndicado %></td>
-                <td><%= user.foneIndicado %></td>
+                <td><%= 
+                  
+                  `(${user.foneIndicado.substr(0, 2)}) ${user.foneIndicado.substr(2,5)}-${user.foneIndicado.substr(7,4)}`
+                  
+                  %></td>
               </tr>
     
             <% }); %>
