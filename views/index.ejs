@@ -29,9 +29,6 @@
           <li class="nav-item">
             <a class="nav-link" href="/dadospessoais">Dados Cadastrais</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/indicacoes">Indicar</a>
-          </li>
         </ul>
         <div class="d-inline-block">
           <a class="sair" href="/logout">
@@ -58,8 +55,9 @@
     <div class="estatisticas">
 
     <div class="row row-cols-2 text-center">
-      <div class="col mb-4">
+      <div class="col-4 mb-4">
         <div class="card mb-4 shadow-sm">
+          <a href="/lista/indicados" style="position: absolute;width: 100%;height: 100%;"></a>
           <div class="card-header">
             <h4 class="my-0 font-weight-normal">INDICADOS</h4>
           </div>
@@ -68,8 +66,10 @@
           </div>
         </div>
         </div>
-        <div class="col mb-4">
+        <div class="col-4 mb-4">
         <div class="card mb-4 shadow-sm">
+          <a href="/lista/inativos" style="position: absolute;width: 100%;height: 100%;"></a>
+          <a href="/lista/ativos" style="position: absolute;width: 100%;height: 100%;"></a>
           <div class="card-header">
             <h4 class="my-0 font-weight-normal">ATIVOS</h4>
           </div>
@@ -78,7 +78,7 @@
           </div>
         </div>
         </div>
-        <div class="col mb-4">
+        <div class="col-4 mb-4">
         <div class="card mb-4 shadow-sm">
           <div class="card-header">
             <h4 class="my-0 font-weight-normal">INATIVOS</h4>
@@ -89,7 +89,7 @@
         </div>
         </div>
 
-        <div class="col mb-4">
+        <div class="col m-auto">
         <div class="d-block m-auto card mb-4 shadow-sm">
             <div class="card-header">
               <h4 class="my-0 font-weight-normal">BONUS</h4>
@@ -100,6 +100,10 @@
         </div>
       </div>
 
+      </div>
+
+      <div class="text-center my-5">
+        <a href="/indicacoes" class="btn bg-secundary-color" style="width: 200px;">Indicar</a>
       </div>
 
     </div>

@@ -54,9 +54,10 @@ header {
 .bg-secundary-color{
   background-color: #f1363a;
   border-color: #f1363a;
+  color: white;
 }
 
-.bg-secundary-color:hover {
+.bg-secundary-color:hover,.bg-secundary-color:active,.bg-secundary-color:focus {
   background-color: #f1363a;
   border-color: #f1363a;
   opacity: 0.75

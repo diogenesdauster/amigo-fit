@@ -20,11 +20,6 @@ const {
 } = require("./api");
 
 
-const dbData = {
-  Users: {},
-  Indicados: {}
-}
-
 passport.use(new LocalStrategy(
   function(username, password, done) {
     loginUser(username, password, (err, user) => {
@@ -66,13 +61,6 @@ app.get("/login", function(req, res, next) {
   }
 });
 
-/*
-app.post("/login", passport.authenticate('local', {
-  successRedirect: '/',
-  failureRedirect: '/login'
-}));
-*/
-
 
 app.post('/login', function(req, res) {
   passport.authenticate('local', function(err, user) {
@@ -98,6 +86,45 @@ app.post('/login', function(req, res) {
 app.get("/logout", function(req, res) {
   req.logout();
   res.redirect('/');
+});
+
+app.get("/lista/:tipo", function(req, res) {
+  if (req.isAuthenticated()) {
+
+    const { token, cpf} = req.user;
+    const ret = {      
+      data : {
+        'lista' : req.params.tipo,
+        'dados': []
+      }
+    }
+    
+    
+    getIndicacaoBonusUser(token, cpf , function(err, data){
+      
+      if (err) {
+        res.render('/',{error: { message: "Ocorreu um erro ao buscar a lista desejada, tente novamente." }});
+        return;    
+      }
+
+      if(data){
+          if (req.params.tipo === "indicados") {
+            ret.data.dados = data.indicacoesLista;
+          }else if(req.params.tipo === "ativos") {
+            ret.data.dados = data.ativacoesLista;
+          }else if(req.params.tipo === "inativos") {
+            ret.data.dados = data.inativacoesLista;
+          }else { 
+            res.render('/',{error: { message: "A lista solicitada não existe, tente novamente." }});
+            return;
+          }
+      }
+      res.render("lista", ret);
+    });
+
+  }else {
+    res.redirect("/login");
+  }
 });
 
 

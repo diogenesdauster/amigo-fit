@@ -36,8 +36,29 @@ iframe{
   max-width: 100% !important;
 }
 
-@media (max-width: 375px) {
+.text-secundary-color{
+  color: #f1363a;
+}
+
+.bg-secundary-color{
+  background-color: #f1363a;
+  border-color: #f1363a;
+  color: white;
+  text-transform: uppercase;
+}
+
+.bg-secundary-color:hover,.bg-secundary-color:active,.bg-secundary-color:focus {
+  background-color: #f1363a;
+  border-color: #f1363a;
+  opacity: 0.75
+}
+
+@media (max-width: 767px) {
   h4 {
-    font-size: 1rem;
+    font-size: 0.74rem;
+  }
+  .col-4,.col {
+    padding-left: 5px;
+    padding-right: 5px;
   }
 }
