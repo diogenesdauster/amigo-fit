@@ -48,29 +48,33 @@
 
   <section class="container mt-5">
 
+    <div class="card">
+      <div class="card-body">
+        <table id="example" class="table caption-top">
+          <caption>Lista de indicados</caption>
+          <thead>
+            <tr>
+              <th scope="col">Nome</th>
+              <th scope="col">Telefone</th>
+            </tr>
+          </thead>
+          <tbody>
+    
+            <% data.dados.forEach(function(user){ %>
+    
+    
+              <tr>
+                <td><%= user.nomeIndicado %></td>
+                <td><%= user.foneIndicado %></td>
+              </tr>
+    
+            <% }); %>
+    
+          </tbody>
+        </table>
+      </div>
+    </div>
 
-    <table id="example" class="table caption-top">
-      <caption>Lista de indicados</caption>
-      <thead>
-        <tr>
-          <th scope="col">Nome</th>
-          <th scope="col">Telefone</th>
-        </tr>
-      </thead>
-      <tbody>
-
-        <% data.dados.forEach(function(user){ %>
-
-
-          <tr>
-            <td><%= user.nomeIndicado %></td>
-            <td><%= user.foneIndicado %></td>
-          </tr>
-
-        <% }); %>
-
-      </tbody>
-    </table>
 
   </section>
 

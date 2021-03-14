@@ -71,14 +71,14 @@
             <label for="agencia">AGÊNCIA</label>
             <input name="agencia" type="text" class="form-control" id="agencia" value="<%= dados.agencia%>"  
             onkeypress="javascript: return EntradaNumerica(event);"
-            >
+            required>
             <div class="invalid-feedback">
             </div>    
           </div>
 
           <div class="form-group">
             <label for="conta">CONTA</label>
-            <input name="conta" type="text" class="form-control" id="conta" value="<%= dados.conta%>" >
+            <input name="conta" type="text" class="form-control" id="conta" value="<%= dados.conta%>" required>
             <div class="invalid-feedback">
             </div>    
           </div>

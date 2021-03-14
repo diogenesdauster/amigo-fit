@@ -63,14 +63,14 @@
             onkeypress="javascript: return EntradaNumerica(event);"
             onfocus="javascript: RemoveMak(event);"
             onblur="javascript: FormatarCPF(event.target);"
-            >
+            required>
             <div class="invalid-feedback">
             </div>               
           </div>
 
           <div class="form-group">
             <label for="nome">NOME</label>
-            <input name="nome" type="nome" class="form-control" id="nome" >
+            <input name="nome" type="nome" class="form-control" id="nome" required>
             <div class="invalid-feedback">
             </div>   
           </div>
@@ -80,7 +80,7 @@
             <input name="celular" type="celular" class="form-control" id="celular" 
             onkeypress="javascript: return EntradaNumerica(event);" 
             onfocus="javascript: RemoveMak(event);"
-            onblur="javascript: FormatarCelular(event.target);">
+            onblur="javascript: FormatarCelular(event.target);" required>
             <div class="invalid-feedback">
             </div>   
           </div>
