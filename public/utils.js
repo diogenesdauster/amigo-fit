@@ -339,12 +339,16 @@ function ValidaCPF(token) {
   let cpf = document.querySelector("input[name=cpf]");
 
   if(cpf.value.length >= 11) {
-    if (verificaCpf(cpf.value,token)){      
-      cpf.focus();      
-      const validacao = cpf.nextElementSibling;
-      validacao.innerText = "O CPF informado já foi indicado.";
-      cpf.classList.add("is-invalid");
-    }  
+    verificaCpf(cpf.value,token).then(isValid => {
+      if (isValid === true){      
+        cpf.focus();      
+        const validacao = cpf.nextElementSibling;
+        validacao.innerText = "O CPF informado já foi indicado.";
+        cpf.classList.add("is-invalid");
+      }else {
+        cpf.classList.remove("is-invalid");
+      }    
+    });
   }
 }
 
