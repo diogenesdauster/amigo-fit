@@ -334,7 +334,7 @@ function ValidaDadosBancarios(event) {
     return true;
 }
 
-function ValidaCPF(token) {
+function ValidaECPF(token) {
   document.querySelector("input[name=cpf]").value = ApenasNumeros(document.querySelector("input[name=cpf]").value);
   let cpf = document.querySelector("input[name=cpf]");
 
@@ -350,6 +350,48 @@ function ValidaCPF(token) {
       }    
     });
   }
+}
+
+
+function completaByCpf() {
+  document.querySelector("input[name=cpf]").value = ApenasNumeros(document.querySelector("input[name=cpf]").value);
+  let cpf = document.querySelector("input[name=cpf]");
+  let nome = document.querySelector("input[name=nome]");
+  let email = document.querySelector("input[name=email]");
+
+  if(cpf.value.length >= 11) {
+    verificaICpf(cpf.value).then(indicado => {
+      if (indicado){      
+        nome.value = indicado.nome;
+        email.value = indicado.email;
+      }
+    });
+  }
+}
+
+function verificaICpf(cpf) {
+  const options = {
+      method: 'GET', 
+      mode: 'cors'        
+  }
+  const URL = `https://amigofit-ws.herokuapp.com/usuarioSenha/${cpf}/1`
+
+  return ( async function () {
+    return await fetch(URL, options)
+    .then( response => {           
+      return response.json().then( indicado => {
+          if (response.status === 200 ) {  
+              return indicado;
+          }else {              
+              return false;
+          }
+      });
+    }).catch(error => {
+      console.log(error);
+      return false;
+    });
+  })();
+  
 }
 
 function verificaCpf(cpf, token) {
@@ -379,3 +421,4 @@ function verificaCpf(cpf, token) {
   })();
   
 }
+

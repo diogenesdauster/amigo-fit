@@ -41,7 +41,7 @@
             <input name="cpf" type="text" class="form-control" id="cpf"
               onkeypress="javascript: return EntradaNumerica(event);"
               onfocus="javascript: RemoveMak(event);"
-              onblur="javascript: FormatarCPF(event.target);"
+              onblur="javascript: completaByCpf(); FormatarCPF(event.target);"
               required >
             <div class="invalid-feedback">
             </div>
