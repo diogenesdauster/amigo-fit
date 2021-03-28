@@ -381,7 +381,12 @@ function verificaICpf(cpf) {
     .then( response => {           
       return response.json().then( indicado => {
           if (response.status === 200 ) {  
-              return indicado;
+              if(indicado.cpf) {
+                return indicado;
+              } else{
+                return false;
+              }
+              
           }else {              
               return false;
           }
