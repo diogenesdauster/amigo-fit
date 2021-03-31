@@ -14,7 +14,8 @@ const {
   getBancos,
   createIndicacaoUser,
   getIndicacaoBonusUser,
-  esqueciSenhaUser
+  esqueciSenhaUser,
+  getConfigVideo
 } = require("./api");
 
 
@@ -40,7 +41,7 @@ passport.deserializeUser(function(user, done) {
 
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
-app.use(bodyParser.urlencoded({
+app.use(express.urlencoded({
   extended: false
 }));
 app.use(session({
@@ -135,21 +136,25 @@ app.get("/", function(req, res, next) {
         'ativos': 0,
         'inativos':0,
         'bonus': 0
-      }
+      },'video': ''    
     }
 
-    
 
-    getIndicacaoBonusUser(token, cpf , function(err, data){
-      console.log(token)
-      console.log(data)
-      if(data){
-          ret.dados.indicados = data.indicacoes;
-          ret.dados.ativos = data.ativacoes;
-          ret.dados.inativos = data.inativacoes;
-          ret.dados.bonus = data.totalBonus;
+    getConfigVideo(function(err, data){      
+      if(data) {
+        ret.video = data
       }
-      res.render("index", ret);
+
+      getIndicacaoBonusUser(token, cpf , function(err, data){
+        if(data){
+            ret.dados.indicados = data.indicacoes;
+            ret.dados.ativos = data.ativacoes;
+            ret.dados.inativos = data.inativacoes;
+            ret.dados.bonus = data.totalBonus;
+        }
+        res.render("index", ret);
+      }); 
+
     });
 
   } else {

@@ -395,6 +395,47 @@ const esqueciSenhaUser = function(data, callback) {
 
 }
 
+
+const getConfigVideo = function(callback) {
+  const options = {
+    host: HOST,
+    port: 443,
+    method: 'GET',
+    path: '/configuracao',
+    headers: {
+      Accept: '*/*'
+    }
+  }
+
+  const req = https.request(options, (res) => {
+
+    res.on('data', (d) => {
+      const response = JSON.parse(d);
+      if( res.statusCode == 200 ){
+        const objVideo = response.filter((element) => element.chave == "PROPAGANDA_ABERTURA");
+        if(objVideo.length) {
+          callback(null, objVideo[0].valor);
+        } else  {
+          callback(null, 'MrY3je1gMMo');
+        }
+      } else {
+        callback(response.error, null);
+      }
+    });
+
+  });
+
+
+  req.on('error', (e) => {
+    console.log(e);
+    callback(e, null);
+  });
+
+  req.end();
+
+
+} 
+
 module.exports = {
   UpdateUser,
   createUser,
@@ -405,5 +446,6 @@ module.exports = {
   getBancos,
   createIndicacaoUser,
   getIndicacaoBonusUser,
-  esqueciSenhaUser
+  esqueciSenhaUser,
+  getConfigVideo
 };
