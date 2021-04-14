@@ -1,147 +1,128 @@
-const https = require('https');
+const https = require("https");
 const HOST = "amigofit-ws.herokuapp.com";
 
-
-const createUser = function(data, callback) {
+const createUser = function (data, callback) {
   const jsonData = JSON.stringify(data);
   const options = {
     host: HOST,
     port: 443,
-    path: '/usuario/',
-    method: 'POST',
+    path: "/usuario/",
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
-      'Content-Length': jsonData.length
-    }
+      "Content-Type": "application/json",
+      "Content-Length": jsonData.length,
+    },
   };
 
   const req = https.request(options, (res) => {
-
-    res.on('data', (d) => {
+    res.on("data", (d) => {
       const userJson = JSON.parse(d);
-      callback(null, userJson)
+      callback(null, userJson);
     });
-
   });
 
-  req.on('error', (e) => {
+  req.on("error", (e) => {
     console.error(e);
     callback(e, null);
-
   });
 
   req.write(jsonData);
   req.end();
+};
 
-}
-
-
-const UpdateUser = function(token, data, callback) {
+const UpdateUser = function (token, data, callback) {
   const jsonData = JSON.stringify(data);
   const options = {
     host: HOST,
     port: 443,
-    path: '/usuario/',
-    method: 'PATCH',
+    path: "/usuario/",
+    method: "PATCH",
     headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + token,
-      'Content-Length': jsonData.length
-    }
-
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
+      "Content-Length": jsonData.length,
+    },
   };
 
-
   const req = https.request(options, (res) => {
-
-    res.on('data', (d) => {
-
+    res.on("data", (d) => {
       const userJson = JSON.parse(d);
-      if( res.statusCode === 200 ){
+      if (res.statusCode === 200) {
         callback(null, userJson);
-      }else {
+      } else {
         console.log(userJson);
         callback(userJson.error, null);
       }
     });
-
   });
 
-  req.on('error', (e) => {
+  req.on("error", (e) => {
     console.error(e);
     callback(e, null);
-
   });
 
   req.write(jsonData);
   req.end();
+};
 
-}
-
-const authUser = function(data, callback) {
+const authUser = function (data, callback) {
   const jsonData = JSON.stringify(data);
   const options = {
     host: HOST,
     port: 443,
-    path: '/auth/',
-    method: 'POST',
+    path: "/auth/",
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
-      'Content-Length': jsonData.length
-    }
+      "Content-Type": "application/json",
+      "Content-Length": jsonData.length,
+    },
   };
 
   const req = https.request(options, (res) => {
-
-    res.on('data', (d) => {
-
-      if( res.statusCode === 200 ){
+    res.on("data", (d) => {
+      if (res.statusCode === 200) {
         const authJson = JSON.parse(d);
         callback(null, authJson);
-      }else{
+      } else {
         callback("Login ou senha Inválidos!", null);
       }
     });
-
   });
 
-  req.on('error', (e) => {
+  req.on("error", (e) => {
     console.error(e);
     callback(e, null);
   });
 
   req.write(jsonData);
   req.end();
-}
+};
 
-const loginUser = function(login = "", password = "", callback) {
-
+const loginUser = function (login = "", password = "", callback) {
   const loginJson = {
-    "email": login,
-    "senha": password
-  }
+    email: login,
+    senha: password,
+  };
 
   authUser(loginJson, (err, auth) => {
-
     if (auth) {
       const options = {
         host: HOST,
         port: 443,
-        path: '/usuario/' + auth.idUsuario,
+        path: "/usuario/" + auth.idUsuario,
         headers: {
-          Authorization: 'Bearer ' + auth.token
-        }
+          Authorization: "Bearer " + auth.token,
+        },
       };
 
-
       const req = https.get(options, (res) => {
-        res.on('data', (d) => {
-          if(res.statusCode === 200){
+        res.on("data", (d) => {
+          if (res.statusCode === 200) {
             const user = JSON.parse(d);
             const userJson = {
               token: auth.token,
-              ...user
-            }
+              ...user,
+            };
             callback(null, userJson);
           } else {
             callback("Login ou Senha Inválidos!", null);
@@ -149,202 +130,191 @@ const loginUser = function(login = "", password = "", callback) {
         });
       });
 
-      req.on('error', (e) => {
+      req.on("error", (e) => {
         console.error("erro :" + e);
         callback(e, null);
       });
 
       req.end();
-
-    }else {
+    } else {
       callback(err, null);
     }
-
   });
-}
+};
 
-
-const getBancoUser = function(token, cpf, callback) {
+const getBancoUser = function (token, cpf, callback) {
   const options = {
     host: HOST,
     port: 443,
-    path: '/usuarioBanco/' + cpf,
+    path: "/usuarioBanco/" + cpf,
     headers: {
-      Authorization: 'Bearer ' + token
-    }
-  }
+      Authorization: "Bearer " + token,
+    },
+  };
 
   const req = https.get(options, (res) => {
-    res.on('data', (d) => {
+    res.on("data", (d) => {
       const bancoUserJson = JSON.parse(d);
       callback(null, bancoUserJson);
     });
   });
 
-  req.on('error', (e) => {
+  req.on("error", (e) => {
     console.error(e);
     callback(e, null);
   });
 
   req.end();
+};
 
-}
-
-const createBancoUser = function(token, data, callback) {
+const createBancoUser = function (token, data, callback) {
   const jsonData = JSON.stringify(data);
   const options = {
     host: HOST,
     port: 443,
-    method: 'POST',
-    path: '/usuarioBanco/',
+    method: "POST",
+    path: "/usuarioBanco/",
     headers: {
-      Authorization: 'Bearer ' + token
-    }
-  }
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
+    },
+  };
 
   const req = https.request(options, (res) => {
-    res.on('data', (d) => {
-
+    res.on("data", (d) => {
       const bancoUserJson = JSON.parse(d);
       callback(null, bancoUserJson);
     });
   });
 
-  req.on('error', (e) => {
+  req.on("error", (e) => {
     console.error(e);
     callback(e, null);
   });
 
   req.write(jsonData);
   req.end();
+};
 
-}
-
-const updateBancoUser = function(token, data, callback) {
+const updateBancoUser = function (token, data, callback) {
   const jsonData = JSON.stringify(data);
   const options = {
     host: HOST,
     port: 443,
-    method: 'PATCH',
-    path: '/usuarioBanco/',
+    method: "PATCH",
+    path: "/usuarioBanco/",
     headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + token
-    }
-  }
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
+    },
+  };
 
   const req = https.request(options, (res) => {
-    res.on('data', (d) => {
+    res.on("data", (d) => {
       const bancoUserJson = JSON.parse(d);
       callback(null, bancoUserJson);
     });
   });
 
-  req.on('error', (e) => {
+  req.on("error", (e) => {
     console.error(e);
     callback(e, null);
   });
   req.write(jsonData);
   req.end();
+};
 
-}
-
-const getBancos = function(token, callback){
+const getBancos = function (token, callback) {
   const options = {
     host: HOST,
     port: 443,
-    method: 'GET',
-    path: '/banco/',
+    method: "GET",
+    path: "/banco/",
     headers: {
-      Authorization: 'Bearer ' + token
-    }
-  }
+      Authorization: "Bearer " + token,
+    },
+  };
   const req = https.request(options, (res) => {
-
-    let result = '';
-    res.on("data", (data) =>{
-        result += data;
+    let result = "";
+    res.on("data", (data) => {
+      result += data;
     });
-    res.on('end', () => {
+    res.on("end", () => {
       const bancos = JSON.parse(result);
-      if (res.statusCode === 200){
+      if (res.statusCode === 200) {
         callback(null, bancos);
       } else {
         callback(bancos.erros, null);
       }
     });
-
-
   });
 
-  req.on('error', (e) => {
+  req.on("error", (e) => {
     console.log(e);
     callback(e, null);
   });
 
   req.end();
+};
 
-}
-
-const createIndicacaoUser = function(token, data, callback) {
+const createIndicacaoUser = function (token, data, callback) {
   const jsonData = JSON.stringify(data);
   const options = {
     host: HOST,
     port: 443,
-    method: 'POST',
-    path: '/indicacao/',
+    method: "POST",
+    path: "/indicacao/",
     headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + token
-    }
-  }
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
+    },
+  };
 
   const req = https.request(options, (res) => {
-
-    let result = '';
-    res.on("data", (data) =>{
-        result += data;
+    let result = "";
+    res.on("data", (data) => {
+      result += data;
     });
-    
-    res.on('end', () => {
-      if (res.statusCode === 201){
+
+    res.on("end", () => {
+      if (res.statusCode === 201) {
         callback(null, true);
-      }else{
+      } else {
         const { erros } = JSON.parse(result);
         console.log(JSON.parse(result));
         callback(erros, null);
       }
-    }); 
-
+    });
   });
 
-
-
-  req.on('error', (e) => {
+  req.on("error", (e) => {
     console.error(e);
     callback(e, null);
   });
 
   req.write(jsonData);
   req.end();
+};
 
-}
-
-const getIndicacaoBonusUser = function(token, cpf,callback){
+const getIndicacaoBonusUser = function (token, cpf, callback) {
   const options = {
     host: HOST,
     port: 443,
-    method: 'GET',
-    path: '/indicacaoBonus/' + cpf,
+    method: "GET",
+    path: "/indicacaoBonus/" + cpf,
     headers: {
-      Authorization: 'Bearer ' + token
-    }
-  }
+      Authorization: "Bearer " + token,
+    },
+  };
   const req = https.request(options, (res) => {
+    let result = "";
+    res.on("data", (data) => {
+      result += data;
+    });
 
-    res.on("data", (d) =>{
-      const bonus = JSON.parse(d);
-      if (res.statusCode === 200){
+    res.on("end", () => {
+      const bonus = JSON.parse(result);
+      if (res.statusCode === 200) {
         callback(null, bonus);
       } else {
         callback(bonus.erros, null);
@@ -352,89 +322,79 @@ const getIndicacaoBonusUser = function(token, cpf,callback){
     });
   });
 
-  req.on('error', (e) => {
+  req.on("error", (e) => {
     console.log(e);
     callback(e, null);
   });
 
   req.end();
+};
 
-}
-
-
-
-const esqueciSenhaUser = function(data, callback) {
+const esqueciSenhaUser = function (data, callback) {
   const jsonData = JSON.stringify(data);
   const options = {
     host: HOST,
     port: 443,
-    method: 'PATCH',
-    path: '/usuarioSenha/alterarSenha'
-  }
+    method: "PATCH",
+    path: "/usuarioSenha/alterarSenha",
+  };
 
   const req = https.request(options, (res) => {
-    res.on('data', (d) => {
-      
-      if(res.statusCode == 204) {
+    res.on("data", (d) => {
+      if (res.statusCode == 204) {
         callback(null, true);
-      }else {
+      } else {
         const response = JSON.parse(d);
         callback(response.error, null);
       }
-            
     });
   });
 
-  req.on('error', (e) => {
+  req.on("error", (e) => {
     console.error(e);
     callback(e, null);
   });
 
   req.write(jsonData);
   req.end();
+};
 
-}
-
-
-const getConfigVideo = function(callback) {
+const getConfigVideo = function (callback) {
   const options = {
     host: HOST,
     port: 443,
-    method: 'GET',
-    path: '/configuracao',
+    method: "GET",
+    path: "/configuracao",
     headers: {
-      Accept: '*/*'
-    }
-  }
+      Accept: "*/*",
+    },
+  };
 
   const req = https.request(options, (res) => {
-
-    res.on('data', (d) => {
+    res.on("data", (d) => {
       const response = JSON.parse(d);
-      if( res.statusCode == 200 ){
-        const objVideo = response.filter((element) => element.chave == "PROPAGANDA_ABERTURA");
-        if(objVideo.length) {
+      if (res.statusCode == 200) {
+        const objVideo = response.filter(
+          (element) => element.chave == "PROPAGANDA_ABERTURA"
+        );
+        if (objVideo.length) {
           callback(null, objVideo[0].valor);
-        } else  {
-          callback(null, 'MrY3je1gMMo');
+        } else {
+          callback(null, "MrY3je1gMMo");
         }
       } else {
         callback(response.error, null);
       }
     });
-
   });
 
-
-  req.on('error', (e) => {
+  req.on("error", (e) => {
     console.log(e);
     callback(e, null);
   });
 
   req.end();
-
-
-} 
+};
 
 module.exports = {
   UpdateUser,
@@ -447,5 +407,5 @@ module.exports = {
   createIndicacaoUser,
   getIndicacaoBonusUser,
   esqueciSenhaUser,
-  getConfigVideo
+  getConfigVideo,
 };
