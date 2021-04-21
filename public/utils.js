@@ -324,34 +324,88 @@ function ValidaIndicacao(event) {
 }
 
 function ValidaDadosBancarios(event) {
-  let banco = ApenasNumeros(document.querySelector("[name=banco]").value);
-  let agencia = ApenasNumeros(
+  document.querySelector("[name=banco]").value = ApenasNumeros(
+    document.querySelector("[name=banco]").value
+  );
+  document.querySelector("input[name=agencia]").value = ApenasNumeros(
     document.querySelector("input[name=agencia]").value
   );
-  let conta = document.querySelector("input[name=conta]").value;
-  let tpconta = document.querySelector("[name=tpconta]").value;
 
-  if (!ValidaBanco(banco)) {
+  let banco = document.querySelector("[name=banco]");
+  let agencia = document.querySelector("input[name=agencia]");
+  let conta = document.querySelector("input[name=conta]");
+  let tpconta = document.querySelector("[name=tpconta]");
+  let tipoChavePix = document.querySelector("[name=tipoChavePix]");
+  let chavePix = document.querySelector("[name=chavePix]");
+
+  banco.classList.remove("is-invalid");
+  agencia.classList.remove("is-invalid");
+  conta.classList.remove("is-invalid");
+  chavePix.classList.remove("is-invalid");
+
+  if (tipoChavePix.value == "CPF") {
+    chavePix.value = ApenasNumeros(chavePix.value);
+    if (!ValidaCPF(chavePix.value)) {
+      event.preventDefault();
+
+      FormatarCPF(chavePix);
+      chavePix.focus();
+
+      const validacao = chavePix.nextElementSibling;
+      validacao.innerText = "O CPF informado não é valido.";
+      chavePix.classList.add("is-invalid");
+
+      return false;
+    }
+  }
+
+  if (tipoChavePix.value == "EMAIL") {
+    if (!ValidaEmail(chavePix.value)) {
+      event.preventDefault();
+
+      chavePix.focus();
+
+      const validacao = chavePix.nextElementSibling;
+      validacao.innerText = "O Email informado não é valido.";
+      chavePix.classList.add("is-invalid");
+
+      return false;
+    }
+  }
+
+  if (!ValidaBanco(banco.value)) {
     event.preventDefault();
-    alert(
-      "O Código do Banco informado não é valido ou deve contar no minimo 3 digitos."
-    );
+    banco.focus();
+
+    const validacao = banco.nextElementSibling;
+    validacao.innerText =
+      "O Código do Banco informado não é valido ou deve contar no minimo 3 digitos.";
+    banco.classList.add("is-invalid");
+
     return false;
   }
 
-  if (!ValidaAgencia(agencia)) {
+  if (!ValidaAgencia(agencia.value)) {
     event.preventDefault();
-    alert(
-      "O Código da Agencia informado não é valido ou deve contar no minimo 4 digitos."
-    );
+    agencia.focus();
+
+    const validacao = agencia.nextElementSibling;
+    validacao.innerText =
+      "O Código da Agencia informado não é valido ou deve contar no minimo 4 digitos.";
+    agencia.classList.add("is-invalid");
+
     return false;
   }
 
-  if (!ValidaConta(FormatarConta(conta))) {
+  if (!ValidaConta(FormatarConta(conta.value))) {
     event.preventDefault();
-    alert(
-      "O Código da Conta informado não é valido ou deve contar no minimo 6 digitos."
-    );
+    conta.focus();
+
+    const validacao = conta.nextElementSibling;
+    validacao.innerText =
+      "O Código da Conta informado não é valido ou deve contar no minimo 6 digitos.";
+    conta.classList.add("is-invalid");
+
     return false;
   }
 

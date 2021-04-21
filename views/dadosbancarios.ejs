@@ -58,6 +58,27 @@
         <form method="post"  onsubmit="ValidaDadosBancarios(window.event);">
           <input type="hidden" name="id" value="<%= isNaN(dados.id) ? 0 : dados.id  %>">
 
+
+          <div class="form-group">
+            <label for="tipoChavePix">TIPO</label>
+            <select class="form-control" name="tipoChavePix" id="tipoChavePix">
+              <option value="CPF" <%= dados.tipoChavePix == 'CPF' ? 'selected' : ''%>>CPF</option>
+              <option value="EMAIL" <%= dados.tipoChavePix == 'EMAIL' ? 'selected' : ''%>>EMAIL</option>
+              <option value="FONE" <%= dados.tipoChavePix == 'FONE' ? 'selected' : ''%>>FONE</option>
+              <option value="CHAVE_ALEATORIA" <%= dados.tipoChavePix == 'CHAVE_ALEATORIA' ? 'selected' : ''%>>CHAVE_ALEATORIA</option>
+            </select>
+            <div class="invalid-feedback">
+            </div>    
+          </div>
+
+          <div class="form-group">
+            <label for="chavePix">CHAVE PIX</label>
+            <input name="chavePix" type="text" class="form-control" id="chavePix" value="<%= dados.chavePix%>"  
+            required>
+            <div class="invalid-feedback">
+            </div>    
+          </div>
+
           <div class="form-group">
             <label for="banco">BANCO</label>
             <select class="form-control" name="banco" id="banco">

@@ -317,12 +317,13 @@ app.post("/dadosbancarios", function (req, res, next) {
       tipoConta: req.body.tpconta,
       banco_codigo: req.body.banco,
       usuario_cpf: req.user.cpf,
+      chavePix: req.body.chavePix,
+      tipoChavePix: req.body.tipoChavePix,
     };
     const { token } = req.user;
 
     if (idBco) {
       updateBancoUser(token, bancoJson, function (err, bancoUser) {
-        console.log("updateBancoUser", bancoUser);
         if (bancoUser) {
           res.redirect("/");
         } else {
@@ -332,7 +333,6 @@ app.post("/dadosbancarios", function (req, res, next) {
       });
     } else {
       createBancoUser(token, bancoJson, function (err, bancoUser) {
-        console.log("createBancoUser", bancoUser);
         if (bancoUser) {
           res.redirect("/");
         } else {
